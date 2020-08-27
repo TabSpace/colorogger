@@ -1,0 +1,19 @@
+{
+  "name": "colorogger",
+  "version": "1.0.0",
+  "description": "Simple colorful logger. Both for browser and node-server. Easy to report and record.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TabSpace/colorogger.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TabSpace/colorogger/issues"
+  },
+  "homepage": "https://github.com/TabSpace/colorogger#readme"
+}
