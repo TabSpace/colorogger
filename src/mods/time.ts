@@ -1,5 +1,5 @@
-import {fixTo} from './num';
-import {substitute} from './str';
+import { fixTo } from './num';
+import { substitute } from './str';
 
 /**
  * 日期对象格式化输出

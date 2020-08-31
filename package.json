@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rollup -c rollup.config.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --config ./prettier.config.js",
+    "fmt": "prettier --config ./.prettierrc.js --write ./src",
     "lint": "eslint ./src --fix",
     "cz": "git add . && git cz"
   },

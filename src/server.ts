@@ -1,7 +1,4 @@
-// run at server
+import Logger from './mods/logger';
 
-export default class Logger {
-  log() {
-    console.log('server logger');
-  }
-}
+// run at server
+export default Logger;
