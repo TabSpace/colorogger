@@ -1,5 +1,5 @@
-import { fixTo } from './num.ts';
-import { substitute } from './str.ts';
+import {fixTo} from './num';
+import {substitute} from './str';
 
 /**
  * 日期对象格式化输出
@@ -30,7 +30,7 @@ import { substitute } from './str.ts';
  * - mss 毫秒数值，精确到3位(9 => '009')
  * - ms 毫秒原始数值
  * @method format
- * @param {Date} dobj 日期对象，或者可以被转换为日期对象的数据
+ * @param {Date} time 日期对象，或者可以被转换为日期对象的数据
  * @param {Object} [spec] 格式化选项
  * @param {Array} [spec.weekday='日一二三四五六'.split('')] 一周内各天对应名称，顺序从周日算起
  * @param {String} [spec.template='{{YYYY}}-{{MM}}-{{DD}} {{hh}}:{{mm}}'] 格式化模板
@@ -50,7 +50,7 @@ function rLimit(num: number, width: number) {
   return delta > 0 ? str.substr(delta) : str;
 }
 
-export function formatTime(dobj: Date | number, spec: object) {
+export function formatTime(time: Date | number, spec: object) {
   let output = '';
   let data: any = {};
   const conf = {
@@ -58,7 +58,7 @@ export function formatTime(dobj: Date | number, spec: object) {
     template: '{{YYYY}}-{{MM}}-{{DD}} {{hh}}:{{mm}}',
     ...spec,
   };
-  dobj = new Date(dobj);
+  const dobj: Date = new Date(Number(time));
   data.year = dobj.getFullYear();
   data.month = dobj.getMonth() + 1;
   data.date = dobj.getDate();

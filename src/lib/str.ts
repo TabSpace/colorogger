@@ -10,12 +10,11 @@
  */
 
 export function substitute(str: string, obj: any, reg?: RegExp) {
-  return str.replace(reg || (/\\?\{\{([^{}]+)\}\}/g), (match, name) => {
+  return str.replace(reg || /\\?\{\{([^{}]+)\}\}/g, (match, name) => {
     if (match.charAt(0) === '\\') {
       return match.slice(1);
     }
-    // 注意：obj[name] != null 等同于 obj[name] !== null && obj[name] !== undefined
-    return (obj[name] != null) ? obj[name] : '';
+    return obj[name] !== null && obj[name] !== undefined ? obj[name] : '';
   });
 }
 
@@ -29,20 +28,20 @@ export function substitute(str: string, obj: any, reg?: RegExp) {
  */
 
 export function getRnd36(rnd?: number) {
-  rnd = rnd || Math.random();
-  return rnd.toString(36).replace(/^0./, '');
+  const rndnum = rnd || Math.random();
+  return rndnum.toString(36).replace(/^0./, '');
 }
 
 /**
  * 获取36进制日期字符串
  * @method getTime36
- * @param {Date} [date] 符合规范的日期字符串或者数字，不传参数则使用当前客户端时间
+ * @param {Date} [time] 符合规范的日期字符串或者数字，不传参数则使用当前客户端时间
  * @return {String} 转成为36进制的字符串
  * @example
  * getTime36('2020'); // 'k4ujaio0'
  */
 
-export function getTime36(date?: number | Date) {
-  date = date ? new Date(date) : new Date();
+export function getTime36(time?: number | Date) {
+  const date: Date = time ? new Date(Number(time)) : new Date();
   return date.getTime().toString(36);
 }

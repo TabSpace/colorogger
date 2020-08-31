@@ -1,7 +1,8 @@
 // run at browser
+// @see http://voidcanvas.com/make-console-log-output-colorful-and-stylish-in-browser-node/
 
 export default class Logger {
-  log() {
+  public log() {
     console.log('client logger');
   }
 }
