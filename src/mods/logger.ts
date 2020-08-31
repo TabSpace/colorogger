@@ -1,5 +1,6 @@
 export default class Logger {
   private constructor(options) {
+    console.log('init');
     this.config(options);
   }
 
