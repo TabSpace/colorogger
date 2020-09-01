@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import cloneDeep from 'lodash/cloneDeep';
 import Logger from './mods/logger';
 import { formatTime } from './mods/time';
 
@@ -19,75 +20,100 @@ function setColor(msg: any, color: string) {
   return str;
 }
 
-Logger.prototype.output = function (options: any, para: Array<any>) {
-  const spec: any = {
-    level: 'log',
-    flag: '',
-    color: '',
-    ...options,
-  };
-  const { config, meta, levels, colors, icons } = this;
-
-  const msg: any = {};
-  Object.assign(msg, meta);
-
-  msg.content = para;
-  msg.level = spec.level;
-  msg.flag = spec.flag;
-  msg.grade = levels[msg.level] || 0;
-  msg.time = Date.now();
-
-  let level = spec.level || 'log';
-  const icon = icons[spec.flag] || icons[level];
-  const color = spec.color || colors[spec.flag] || colors[level];
-
-  let method = level;
-  if (typeof console[method] !== 'function') {
-    method = 'log';
+class ServerLogger extends Logger {
+  public constructor(options?) {
+    super(options);
   }
 
-  let args: Array<any> = [];
-  args = para.slice(0);
-  if (color) {
-    args = args.map((item) => setColor(item, color));
-  }
-
-  Object.keys(meta).forEach((key) => {
-    const tag = meta[key] || '';
-    if (tag) {
-      let strTag = `[${tag}]`;
-      strTag = setColor(strTag, color);
-      args.unshift(strTag);
-    }
-  });
-
-  let tagLevel = `[${level}]`;
-  if (icon) {
-    let iconTag = icon.icon;
-    if (iconTag) {
-      tagLevel = `[${iconTag}]`;
-    }
-    let iconColor = icon.color || color;
-    tagLevel = setColor(tagLevel, iconColor);
-    args.unshift(tagLevel);
-  }
-
-  if (config.timeStamp) {
-    const time = formatTime(msg.time, {
-      template: config.timeTemplate,
+  // clone logger
+  public fork(options?) {
+    const clone = new ServerLogger(options);
+    Object.keys(this).forEach((key) => {
+      if (typeof this[key] === 'object') {
+        clone[key] = cloneDeep(this[key]);
+      } else {
+        clone[key] = this[key];
+      }
     });
-    args.unshift(chalk.gray(time));
+    clone.config(options);
+    return clone;
   }
 
-  msg.__content = args;
+  public output(options: any, para: Array<any>) {
+    const spec: any = {
+      level: 'log',
+      flag: '',
+      color: '',
+      ...options,
+    };
+    const { conf, meta, levels, colors, icons } = this;
 
-  if (typeof config.transport === 'function') {
-    config.transport(msg);
+    console.log('output this:', this);
+    console.log('output this.meta:', this.meta);
+
+    const msg: any = {};
+    Object.assign(msg, meta);
+
+    msg.content = para;
+    msg.level = spec.level;
+    msg.flag = spec.flag;
+    msg.grade = levels[msg.level] || 0;
+    msg.time = Date.now();
+
+    let level = spec.level || 'log';
+    const icon = icons[spec.flag] || icons[level];
+    const color = spec.color || colors[spec.flag] || colors[level];
+
+    let method = level;
+    if (typeof console[method] !== 'function') {
+      method = 'log';
+    }
+
+    let args: Array<any> = [];
+    args = para.slice(0);
+    if (color) {
+      args = args.map((item) => setColor(item, color));
+    }
+
+    Object.keys(meta).forEach((key) => {
+      const tag = meta[key] || '';
+      if (tag) {
+        let strTag = `[${tag}]`;
+        strTag = setColor(strTag, color);
+        args.unshift(strTag);
+      }
+    });
+
+    let tagLevel = `[${level}]`;
+    if (icon) {
+      let iconTag = icon.icon;
+      if (iconTag) {
+        tagLevel = `[${iconTag}]`;
+      }
+      let iconColor = icon.color || color;
+      tagLevel = setColor(tagLevel, iconColor);
+      args.unshift(tagLevel);
+    }
+
+    if (conf.timeStamp) {
+      const time = formatTime(msg.time, {
+        template: conf.timeTemplate,
+      });
+      args.unshift(chalk.gray(time));
+    }
+
+    msg.__content = args;
+
+    console.log('msg:', msg);
+
+    if (typeof conf.transport === 'function') {
+      conf.transport(msg);
+    }
+    if (conf.print) {
+      console[method].apply(console, args);
+    }
   }
-  if (config.print) {
-    console[method].apply(console, args);
-  }
-};
+}
 
 // run at server
-export default Logger;
+export default ServerLogger;

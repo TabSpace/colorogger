@@ -88,6 +88,7 @@
   "author": "pillar0514@163.com",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^4.1.0"
+    "chalk": "^4.1.0",
+    "lodash": "^4.17.20"
   }
 }

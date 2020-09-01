@@ -1,66 +1,93 @@
+const defaultLevels = {
+  debug: 0,
+  log: 1,
+  info: 2,
+  warn: 3,
+  error: 4,
+};
+
+const defaultColors = {
+  log: '',
+  info: '',
+  debug: '',
+  error: 'red',
+  warn: 'yellow',
+  success: 'green',
+  fail: 'red',
+  tip: 'cyan',
+  stress: 'magenta',
+};
+
+const defaultIcons = {
+  log: {
+    icon: '.',
+    color: '',
+  },
+  info: {
+    icon: '*',
+    color: 'blue',
+  },
+  debug: {
+    icon: '#',
+    color: 'magenta',
+  },
+  warn: {
+    icon: '!',
+    color: 'yellow',
+  },
+  error: {
+    icon: 'x',
+    color: 'red',
+  },
+  success: {
+    icon: '✓',
+    color: 'green',
+  },
+  fail: {
+    icon: '☢',
+    color: 'red',
+  },
+  tip: {
+    icon: '✱',
+    color: 'cyan',
+  },
+  stress: {
+    icon: '⚑',
+    color: 'magenta',
+  },
+};
+
 export default class Logger {
-  private config = {};
-  private meta = {};
-  private levels = {
-    debug: 0,
-    log: 1,
-    info: 2,
-    warn: 3,
-    error: 4,
-  };
-  private colors = {
-    log: '',
-    info: '',
-    debug: '',
-    error: 'red',
-    warn: 'yellow',
-    success: 'green',
-    fail: 'red',
-    tip: 'cyan',
-    stress: 'magenta',
-  };
-  private icons = {
-    log: {
-      icon: '.',
-      color: '',
-    },
-    info: {
-      icon: '*',
-      color: 'blue',
-    },
-    debug: {
-      icon: '#',
-      color: 'magenta',
-    },
-    warn: {
-      icon: '!',
-      color: 'yellow',
-    },
-    error: {
-      icon: 'x',
-      color: 'red',
-    },
-    success: {
-      icon: '✓',
-      color: 'green',
-    },
-    fail: {
-      icon: '☢',
-      color: 'red',
-    },
-    tip: {
-      icon: '✱',
-      color: 'cyan',
-    },
-    stress: {
-      icon: '⚑',
-      color: 'magenta',
-    },
-  };
+  public conf: any;
+  public meta: Object;
+  public levels: Object;
+  public colors: Object;
+  public icons: Object;
 
   public constructor(options?) {
-    this.set(options);
-    this.init();
+    this.conf = {};
+    this.meta = {};
+    this.levels = {
+      ...defaultLevels,
+    };
+    this.colors = {
+      ...defaultColors,
+    };
+    this.icons = {
+      ...defaultIcons,
+    };
+    this.config(options);
+    Object.keys(this.levels).forEach((level) => {
+      this.method(level, {
+        level,
+      });
+    });
+    ['success', 'fail', 'tip', 'stress'].forEach((prop) => {
+      this.method(prop, {
+        level: 'log',
+        flag: prop,
+      });
+    });
   }
 
   public output(options: any, para: Array<any>) {}
@@ -74,13 +101,6 @@ export default class Logger {
   public tip(...args: any) {}
   public stress(...args: any) {}
 
-  // clone logger
-  public fork(options?) {
-    const clone = Object.create(this);
-    clone.config(options);
-    return clone;
-  }
-
   // set theme
   public theme(spec: any) {
     if (spec) {
@@ -93,37 +113,23 @@ export default class Logger {
   }
 
   // set config
-  public set(options) {
+  public config(options) {
     const conf = {
       timeStamp: true,
       timeTemplate: '{{YYYY}}/{{MM}}/{{DD}} {{hh}}:{{mm}}:{{ss}}.{{mss}}',
       print: true,
       ...options,
     };
-    this.config = conf;
-    this.meta = {
+    this.conf = conf;
+    Object.assign(this.meta, {
       ...conf.meta,
-    };
+    });
   }
 
   // add custom method
   public method(name: string, options) {
-    this[name] = (...para) => {
+    this[name] = function (...para) {
       this.output(options, para);
     };
-  }
-
-  private init() {
-    Object.keys(this.levels).forEach((level) => {
-      this.method(level, {
-        level,
-      });
-    });
-    ['success', 'fail', 'tip', 'stress'].forEach((prop) => {
-      this.method(prop, {
-        level: 'log',
-        flag: prop,
-      });
-    });
   }
 }

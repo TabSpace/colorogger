@@ -8,8 +8,6 @@ const logger = new $logger({
   },
 });
 
-console.log(1);
-
 describe('logger.log', () => {
   beforeAll(() => {
     logger.log('log content');
