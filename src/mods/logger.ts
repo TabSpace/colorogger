@@ -1,74 +1,81 @@
 export default class Logger {
-  private config: Object;
-
-  private levels: {
-    debug: 0;
-    log: 1;
-    info: 2;
-    warn: 3;
-    error: 4;
+  private config = {};
+  private meta = {};
+  private levels = {
+    debug: 0,
+    log: 1,
+    info: 2,
+    warn: 3,
+    error: 4,
   };
-
-  private colors: {
-    log: '';
-    info: 'blue';
-    debug: 'gray';
-    error: 'red';
-    warn: 'yellow';
-    success: 'green';
-    fail: 'red';
-    tip: 'cyan';
-    stress: 'magenta';
+  private colors = {
+    log: '',
+    info: '',
+    debug: '',
+    error: 'red',
+    warn: 'yellow',
+    success: 'green',
+    fail: 'red',
+    tip: 'cyan',
+    stress: 'magenta',
   };
-
-  private icons: {
+  private icons = {
     log: {
-      icon: '.';
-      color: '';
-    };
+      icon: '.',
+      color: '',
+    },
     info: {
-      icon: '*';
-      color: 'blue';
-    };
+      icon: '*',
+      color: 'blue',
+    },
     debug: {
-      icon: '#';
-      color: 'gray';
-    };
+      icon: '#',
+      color: 'magenta',
+    },
     warn: {
-      icon: '!';
-      color: 'yellow';
-    };
+      icon: '!',
+      color: 'yellow',
+    },
     error: {
-      icon: 'x';
-      color: 'red';
-    };
+      icon: 'x',
+      color: 'red',
+    },
     success: {
-      icon: '✓';
-      color: 'green';
-    };
+      icon: '✓',
+      color: 'green',
+    },
     fail: {
-      icon: '☢';
-      color: 'red';
-    };
+      icon: '☢',
+      color: 'red',
+    },
     tip: {
-      icon: '✱';
-      color: 'cyan';
-    };
+      icon: '✱',
+      color: 'cyan',
+    },
     stress: {
-      icon: '⚑';
-      color: 'magenta';
-    };
+      icon: '⚑',
+      color: 'magenta',
+    },
   };
 
-  private constructor(options) {
+  public constructor(options?) {
     this.set(options);
     this.init();
   }
 
   public output(options: any, para: Array<any>) {}
+  public log(...args: any) {}
+  public info(...args: any) {}
+  public debug(...args: any) {}
+  public warn(...args: any) {}
+  public error(...args: any) {}
+  public success(...args: any) {}
+  public fail(...args: any) {}
+  public tip(...args: any) {}
+  public stress(...args: any) {}
 
   // clone logger
-  public fork(options) {
+  public fork(options?) {
     const clone = Object.create(this);
     clone.config(options);
     return clone;
@@ -87,8 +94,15 @@ export default class Logger {
 
   // set config
   public set(options) {
-    this.config = {
+    const conf = {
+      timeStamp: true,
+      timeTemplate: '{{YYYY}}/{{MM}}/{{DD}} {{hh}}:{{mm}}:{{ss}}.{{mss}}',
+      print: true,
       ...options,
+    };
+    this.config = conf;
+    this.meta = {
+      ...conf.meta,
     };
   }
 
@@ -108,6 +122,7 @@ export default class Logger {
     ['success', 'fail', 'tip', 'stress'].forEach((prop) => {
       this.method(prop, {
         level: 'log',
+        flag: prop,
       });
     });
   }
