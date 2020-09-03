@@ -5,7 +5,7 @@
   "main": "lib/server.js",
   "scripts": {
     "build": "rollup -c rollup.config.js",
-    "test": "jest ./test",
+    "test": "jest ./test/exec",
     "fmt": "prettier --config ./.prettierrc.js --write ./src",
     "lint": "eslint ./src --fix",
     "example:server": "node ./example/server.js",

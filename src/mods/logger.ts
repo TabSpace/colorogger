@@ -121,6 +121,8 @@ export default class Logger {
       color: true,
       timeStamp: true,
       timeTemplate: '{{YYYY}}/{{MM}}/{{DD}} {{hh}}:{{mm}}:{{ss}}.{{mss}}',
+      wrapIcon: (str) => `[${str}]`,
+      wrapTag: (str) => `[${str}]`,
       print: true,
       ...options,
     };

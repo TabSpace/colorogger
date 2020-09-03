@@ -1,5 +1,5 @@
 import $assert from 'power-assert';
-import $logger from '../src/server';
+import $logger from '../../src/server';
 
 let msg = null;
 

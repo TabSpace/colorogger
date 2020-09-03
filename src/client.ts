@@ -1,5 +1,6 @@
 import Logger from './mods/logger';
 import { formatTime } from './mods/time';
+import { substitute } from './mods/str';
 
 // run at browser
 // @see http://voidcanvas.com/make-console-log-output-colorful-and-stylish-in-browser-node/
@@ -84,7 +85,7 @@ class ClientLogger extends Logger {
     Object.keys(meta).forEach((key) => {
       const tag = meta[key] || '';
       if (tag) {
-        const strTag = `[${tag}]`;
+        const strTag = conf.wrapTag(tag);
         const itemTag = {
           color: conf.color ? color : '',
           content: strTag,
@@ -93,11 +94,11 @@ class ClientLogger extends Logger {
       }
     });
 
-    let tagLevel = `[${level}]`;
+    let tagLevel = conf.wrapIcon(level);
     if (icon) {
       let iconTag = icon.icon;
       if (iconTag) {
-        tagLevel = `[${iconTag}]`;
+        tagLevel = conf.wrapIcon(iconTag);
       }
       const iconColor = icon.color || '';
       const itemIcon = {
