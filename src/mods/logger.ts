@@ -107,7 +107,7 @@ export default class Logger {
   // set theme
   public theme(spec: any) {
     if (spec) {
-      ['colors', 'icons', 'levels'].forEach((prop) => {
+      ['colors', 'icons'].forEach((prop) => {
         if (typeof spec[prop] === 'object') {
           Object.assign(this[prop], spec[prop]);
         }
@@ -147,9 +147,10 @@ export default class Logger {
   }
 
   // add custom method
-  public method(name: string, options) {
+  public method(name: string, options?) {
     this[name] = function (...para) {
-      this.output(options, para);
+      const opts = { ...options };
+      this.output(opts, para);
     };
   }
 }

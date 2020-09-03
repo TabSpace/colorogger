@@ -72,7 +72,7 @@ class ServerLogger extends Logger {
       if (iconTag) {
         tagLevel = `[${iconTag}]`;
       }
-      let iconColor = icon.color || color;
+      let iconColor = icon.color || '';
       tagLevel = setColor(tagLevel, iconColor);
       args.unshift(tagLevel);
     }
