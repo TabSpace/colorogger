@@ -1,6 +1,6 @@
 {
   "name": "colorogger",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A simple colorful logger. Both for browser and node-server. Easy to report and record.",
   "main": "lib/server.js",
   "scripts": {
@@ -90,7 +90,7 @@
     ]
   },
   "files": [
-    "dist",
+    "lib",
     "src"
   ],
   "author": "pillar0514@163.com",
