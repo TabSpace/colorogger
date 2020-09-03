@@ -6,7 +6,6 @@ let msg = null;
 const logger = new $logger({
   transport: (message) => {
     msg = message;
-    console.log(msg);
   },
 });
 
@@ -46,7 +45,7 @@ describe('info theme', () => {
 
 describe('debug theme', () => {
   beforeAll(() => {
-    logger.debug('debug');
+    logger.debug('debug', { a: 1 });
   });
 
   test('debug msg.content', () => {
@@ -58,5 +57,8 @@ describe('debug theme', () => {
   });
   test('debug color', () => {
     $assert.equal(msg.__content[3], 'color: #ff9501;');
+  });
+  test('debug extra', () => {
+    $assert.equal(msg.__content[4].a, 1);
   });
 });

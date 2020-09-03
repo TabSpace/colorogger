@@ -23,6 +23,7 @@ function parseArgs(args: Array<any>) {
         colors.push(`color: ${item.color};`);
       } else {
         breaked = true;
+        extras.push(item.content);
       }
     } else {
       extras.push(item.content);
