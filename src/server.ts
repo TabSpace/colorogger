@@ -1,5 +1,4 @@
 import chalk from 'chalk';
-import cloneDeep from 'lodash/cloneDeep';
 import Logger from './mods/logger';
 import { formatTime } from './mods/time';
 
@@ -25,20 +24,6 @@ class ServerLogger extends Logger {
     super(options);
   }
 
-  // clone logger
-  public fork(options?) {
-    const clone = new ServerLogger(options);
-    Object.keys(this).forEach((key) => {
-      if (typeof this[key] === 'object') {
-        clone[key] = cloneDeep(this[key]);
-      } else {
-        clone[key] = this[key];
-      }
-    });
-    clone.config(options);
-    return clone;
-  }
-
   public output(options: any, para: Array<any>) {
     const spec: any = {
       level: 'log',
@@ -47,9 +32,6 @@ class ServerLogger extends Logger {
       ...options,
     };
     const { conf, meta, levels, colors, icons } = this;
-
-    console.log('output this:', this);
-    console.log('output this.meta:', this.meta);
 
     const msg: any = {};
     Object.assign(msg, meta);
@@ -104,10 +86,8 @@ class ServerLogger extends Logger {
 
     msg.__content = args;
 
-    console.log('msg:', msg);
-
-    if (typeof conf.transport === 'function') {
-      conf.transport(msg);
+    if (typeof this.transport === 'function') {
+      this.transport(msg);
     }
     if (conf.print) {
       console[method].apply(console, args);

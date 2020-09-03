@@ -24,50 +24,62 @@ const fork2 = logger.fork({
   },
 });
 
-console.log('fork1', fork1);
-console.log('fork2', fork2);
+const fork3 = fork2.fork({
+  meta: {
+    tag: 'tag3',
+  },
+});
 
-fork1.log('fork1 1');
-fork2.log('fork2 2');
-fork1.log('fork1 3');
+describe('fork1 meta', () => {
+  beforeAll(() => {
+    fork1.log('fork1');
+  });
 
-describe('temp', () => {
-  test('temp', () => {
-    $assert.equal(1, 1);
+  test('msg.content', () => {
+    $assert.equal(msg.content[0], 'fork1');
+    $assert.equal(msg.__content[2], '[f1_guid]');
+  });
+  test('msg.url', () => {
+    $assert.equal(msg.url, '/url');
+  });
+  test('msg.guid', () => {
+    $assert.equal(msg.guid, 'f1_guid');
   });
 });
 
-// describe('fork1 meta', () => {
-//   beforeAll(() => {
-//     console.log('run fork 1')
-//     fork1.log('fork1')
-//   });
+describe('fork2 meta', () => {
+  beforeAll(() => {
+    fork2.log('fork2');
+  });
 
-//   test('msg.content', () => {
-//     $assert.equal(msg.content[0], 'fork1');
-//     $assert.equal(msg.__content[2], '[f1_guid]');
-//   });
-//   test('msg.url', () => {
-//     $assert.equal(msg.url, '/url');
-//   });
-//   test('msg.guid', () => {
-//     $assert.equal(msg.guid, 'f1_guid');
-//   });
-// });
+  test('msg.content', () => {
+    $assert.equal(msg.content[0], 'fork2');
+    $assert.equal(msg.__content[3], '[/url]');
+  });
+  test('msg.url', () => {
+    $assert.equal(msg.url, '/url');
+  });
+  test('msg.guid', () => {
+    $assert.equal(msg.guid, 'f2_guid');
+  });
+});
 
-// describe('fork2 meta', () => {
-//   beforeAll(() => {
-//     fork2.log('fork2')
-//   });
+describe('fork3 meta', () => {
+  beforeAll(() => {
+    fork3.log('fork3');
+  });
 
-//   test('msg.content', () => {
-//     $assert.equal(msg.content[0], 'fork2');
-//     $assert.equal(msg.__content[3], '[/f2_url]');
-//   });
-//   test('msg.url', () => {
-//     $assert.equal(msg.url, '/f2_url');
-//   });
-//   test('msg.guid', () => {
-//     $assert.equal(msg.guid, 'f2_guid');
-//   });
-// });
+  test('msg.content', () => {
+    $assert.equal(msg.content[0], 'fork3');
+    $assert.equal(msg.__content[4], '[/url]');
+  });
+  test('msg.url', () => {
+    $assert.equal(msg.url, '/url');
+  });
+  test('msg.guid', () => {
+    $assert.equal(msg.guid, 'f2_guid');
+  });
+  test('msg.tag', () => {
+    $assert.equal(msg.tag, 'tag3');
+  });
+});

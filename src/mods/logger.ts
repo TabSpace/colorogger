@@ -1,3 +1,5 @@
+import cloneDeep from 'lodash/cloneDeep';
+
 const defaultLevels = {
   debug: 0,
   log: 1,
@@ -63,6 +65,7 @@ export default class Logger {
   public levels: Object;
   public colors: Object;
   public icons: Object;
+  public transport: Function;
 
   public constructor(options?) {
     this.conf = {};
@@ -124,6 +127,23 @@ export default class Logger {
     Object.assign(this.meta, {
       ...conf.meta,
     });
+    if (typeof conf.transport === 'function') {
+      this.transport = conf.transport;
+    }
+  }
+
+  // clone logger
+  public fork(options?) {
+    const clone = Object.create(this);
+    Object.keys(this).forEach((key) => {
+      if (typeof this[key] === 'object') {
+        clone[key] = cloneDeep(this[key]);
+      } else {
+        clone[key] = this[key];
+      }
+    });
+    clone.config(options);
+    return clone;
   }
 
   // add custom method
