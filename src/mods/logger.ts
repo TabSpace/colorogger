@@ -118,6 +118,7 @@ export default class Logger {
   // set config
   public config(options) {
     const conf = {
+      color: true,
       timeStamp: true,
       timeTemplate: '{{YYYY}}/{{MM}}/{{DD}} {{hh}}:{{mm}}:{{ss}}.{{mss}}',
       print: true,
@@ -152,5 +153,12 @@ export default class Logger {
       const opts = { ...options };
       this.output(opts, para);
     };
+  }
+
+  public destroy() {
+    this.conf.transport = null;
+    Object.keys(this).forEach((prop) => {
+      this[prop] = null;
+    });
   }
 }

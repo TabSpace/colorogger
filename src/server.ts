@@ -53,7 +53,7 @@ class ServerLogger extends Logger {
 
     let args: Array<any> = [];
     args = para.slice(0);
-    if (color) {
+    if (color && conf.color) {
       args = args.map((item) => setColor(item, color));
     }
 
@@ -61,7 +61,9 @@ class ServerLogger extends Logger {
       const tag = meta[key] || '';
       if (tag) {
         let strTag = `[${tag}]`;
-        strTag = setColor(strTag, color);
+        if (conf.color) {
+          strTag = setColor(strTag, color);
+        }
         args.unshift(strTag);
       }
     });
@@ -73,7 +75,9 @@ class ServerLogger extends Logger {
         tagLevel = `[${iconTag}]`;
       }
       let iconColor = icon.color || '';
-      tagLevel = setColor(tagLevel, iconColor);
+      if (conf.color) {
+        tagLevel = setColor(tagLevel, iconColor);
+      }
       args.unshift(tagLevel);
     }
 
