@@ -1,22 +1,55 @@
-import typescript from 'rollup-plugin-typescript';
+import typescript from 'rollup-plugin-typescript2'
+import commonjs from '@rollup/plugin-commonjs'
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 
-export default [{
+const conf = [];
+
+const typescriptConf = {
+  target: 'es5',
+  sourceMap: false,
+  module: 'ESNext',
+  esModuleInterop: true,
+  rollupCommonJSResolveHack: true,
+  clean: true,
+  tsconfig: './tsconfig.json',
+  tsconfigOverride: {
+    compilerOptions : {
+      module: 'es2015',
+    },
+  },
+};
+
+conf.push({
   input: 'src/server.ts',
   output: {
     file: 'lib/server.js',
-    format: 'cjs'
+    exports: 'default',
+    format: 'cjs',
   },
+  external: [
+    'chalk',
+    'lodash/cloneDeep',
+  ],
   plugins: [
-    typescript()
-  ]
-}, {
+    typescript({
+      ...typescriptConf,
+      target: 'es6',
+    }),
+  ],
+});
+
+conf.push({
   input: 'src/client.ts',
   output: {
     name: 'colorogger',
     file: 'lib/client.js',
-    format: 'umd'
+    format: 'umd',
   },
   plugins: [
-    typescript()
+    nodeResolve(),
+    commonjs(),
+    typescript(typescriptConf),
   ]
-}];
+});
+
+export default conf;
