@@ -4,6 +4,7 @@
   "description": "A simple colorful logger. Both for browser and node-server. Easy to report and record.",
   "main": "lib/server.js",
   "scripts": {
+    "prepublishOnly": "npm run build",
     "build": "rollup -c rollup.config.js",
     "test": "jest ./test/exec",
     "fmt": "prettier --config ./.prettierrc.js --write ./src",
