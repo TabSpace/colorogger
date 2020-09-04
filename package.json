@@ -1,6 +1,6 @@
 {
   "name": "colorogger",
-  "version": "0.1.0",
+  "version": "0.0.0-development",
   "description": "A simple colorful logger. Both for browser and node-server. Easy to report and record.",
   "main": "lib/server.js",
   "scripts": {
@@ -11,11 +11,12 @@
     "lint": "eslint ./src --fix",
     "example:server": "node ./example/server.js",
     "example:client": "http-server ./",
-    "cz": "git add . && git cz"
+    "cz": "git add . && git cz",
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TabSpace/colorogger.git"
+    "url": "https://github.com/TabSpace/colorogger.git"
   },
   "bugs": {
     "url": "https://github.com/TabSpace/colorogger/issues"

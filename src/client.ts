@@ -1,6 +1,5 @@
 import Logger from './mods/logger';
 import { formatTime } from './mods/time';
-import { substitute } from './mods/str';
 
 // run at browser
 // @see http://voidcanvas.com/make-console-log-output-colorful-and-stylish-in-browser-node/

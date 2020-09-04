@@ -60,7 +60,7 @@ class ServerLogger extends Logger {
     Object.keys(meta).forEach((key) => {
       const tag = meta[key] || '';
       if (tag) {
-        let strTag = `[${tag}]`;
+        let strTag = conf.wrapTag(tag);
         if (conf.color) {
           strTag = setColor(strTag, color);
         }
@@ -68,11 +68,11 @@ class ServerLogger extends Logger {
       }
     });
 
-    let tagLevel = `[${level}]`;
+    let tagLevel = conf.wrapIcon(level);
     if (icon) {
       let iconTag = icon.icon;
       if (iconTag) {
-        tagLevel = `[${iconTag}]`;
+        tagLevel = conf.wrapIcon(iconTag);
       }
       let iconColor = icon.color || '';
       if (conf.color) {
