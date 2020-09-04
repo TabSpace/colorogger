@@ -1,8 +1,12 @@
 # colorogger
 
+[![npm version](https://badge.fury.io/js/colorogger.svg)](https://www.npmjs.com/package/colorogger)
 ![action-release](https://github.com/TabSpace/colorogger/workflows/release/badge.svg)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 A simple colorful logger. Both for browser and node-server. Easy to report and record.
+
+[releases and changelog](https://github.com/TabSpace/colorogger/releases)
 
 ## Demo
 
