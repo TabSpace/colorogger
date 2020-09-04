@@ -50,3 +50,118 @@ const colorogger = require('colorogger/lib/client');
 const logger = new colorogger();
 logger.success('message');
 ```
+
+## Options
+
+### color
+
+Enable colored log.
+
+- type: `Boolean`
+- default: `true`
+
+### timeStamp
+
+Enable time stamp.
+
+- type: `Boolean`
+- default: `true`
+
+### print
+
+Enable logger print log to console.
+
+- type: `Boolean`
+- default: `true`
+
+### timeTemplate
+
+Format time stamp.
+
+- type: `String`
+- default: `'{{YYYY}}/{{MM}}/{{DD}} {{hh}}:{{mm}}:{{ss}}.{{mss}}'`
+
+### wrapIcon
+
+Format icon log text.
+
+- type: `Function`
+- default: `(str) => \`[${str}]\``
+
+### wrapTag
+
+Format meta key log text.
+
+- type: `Function`
+- default: `(str) => \`[${str}]\``
+
+### meta
+
+Extra log info.
+
+- type: `Object`
+- default: `undefined`
+
+Example:
+
+```js
+const logger = new colorogger({
+  timeStamp: false,
+  meta: {
+    guid: 'guid_abc'
+  }
+});
+
+logger.log('log text');
+// console output: [.] [guid_abc] log text
+```
+
+### transport
+
+Resive message object.
+
+- type: `Function`
+- default: `undefined`
+
+Example:
+
+```js
+const logger = new colorogger({
+  meta: {
+    guid: 'guid_123',
+  },
+  transport(msg) {
+    console.log(msg);
+  }
+});
+
+logger.success('log text');
+// msg.content: ['log text']
+// msg.flag: 'success'
+// msg.grade: 1
+// msg.guid: 'guid_123'
+// msg.level: log
+// msg.time: 1599215203843
+```
+
+## Api
+
+### config(options)
+
+Set logger config.
+
+- param [Object] options: constructor options
+
+### fork(options)
+
+Clone instance.
+
+- param [Object] options: constructor options
+
+### method(name, options?)
+
+### theme(spec)
+
+### destroy()
+
+Destroy instance.
