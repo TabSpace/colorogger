@@ -109,7 +109,9 @@ export default class Logger {
     if (spec) {
       ['colors', 'icons'].forEach((prop) => {
         if (typeof spec[prop] === 'object') {
-          Object.assign(this[prop], spec[prop]);
+          Object.assign(this[prop], {
+            ...spec[prop],
+          });
         }
       });
     }
