@@ -1,6 +1,8 @@
 import $assert from 'power-assert';
 import $logger from '../../src/server';
 
+const ci = process.env.CI;
+
 let msg = null;
 
 const logger = new $logger({
@@ -37,9 +39,11 @@ describe('info theme', () => {
   test('info icon', () => {
     $assert.equal(msg.__content[1], '[i]');
   });
-  test('info color', () => {
-    $assert.equal(msg.__content[2], '\u001b[33minfo\u001b[39m');
-  });
+  if (!ci) {
+    test('info color', () => {
+      $assert.equal(msg.__content[2], '\u001b[33minfo\u001b[39m');
+    });
+  }
 });
 
 describe('debug theme', () => {
@@ -50,10 +54,12 @@ describe('debug theme', () => {
   test('debug msg.content', () => {
     $assert.equal(msg.content[0], 'debug');
   });
-  test('debug icon', () => {
-    $assert.equal(msg.__content[1], '\u001b[38;2;255;149;1m[d]\u001b[39m');
-  });
-  test('debug color', () => {
-    $assert.equal(msg.__content[2], '\u001b[38;2;255;149;1mdebug\u001b[39m');
-  });
+  if (!ci) {
+    test('debug icon', () => {
+      $assert.equal(msg.__content[1], '\u001b[38;2;255;149;1m[d]\u001b[39m');
+    });
+    test('debug color', () => {
+      $assert.equal(msg.__content[2], '\u001b[38;2;255;149;1mdebug\u001b[39m');
+    });
+  }
 });

@@ -1,6 +1,8 @@
 import $assert from 'power-assert';
 import $logger from '../../src/server';
 
+const ci = process.env.CI;
+
 interface CustomLogger extends $logger {
   temp?: Function;
   custom?: Function;
@@ -55,10 +57,12 @@ describe('custom method', () => {
   test('custom msg.content', () => {
     $assert.equal(msg.content[0], 'c1');
   });
-  test('custom icon', () => {
-    $assert.equal(msg.__content[1], '\u001b[38;2;255;149;1m[c]\u001b[39m');
-  });
-  test('custom color', () => {
-    $assert.equal(msg.__content[2], '\u001b[38;2;255;149;1mc1\u001b[39m');
-  });
+  if (!ci) {
+    test('custom icon', () => {
+      $assert.equal(msg.__content[1], '\u001b[38;2;255;149;1m[c]\u001b[39m');
+    });
+    test('custom color', () => {
+      $assert.equal(msg.__content[2], '\u001b[38;2;255;149;1mc1\u001b[39m');
+    });
+  }
 });
