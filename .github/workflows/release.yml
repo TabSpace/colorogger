@@ -1,0 +1,23 @@
+name: release
+runs-on: ubuntu-latest
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    name: release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Install
+        run: npm i
+      - name: Test
+        run: npm test
+      - name: Build
+        run: npm run build
