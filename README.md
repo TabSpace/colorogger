@@ -4,11 +4,11 @@ A simple colorful logger. Both for browser and node-server. Easy to report and r
 
 ## Demo
 
-server:
+### server demo
 
 ![server demo](https://raw.githubusercontent.com/TabSpace/colorogger/master/example/server.jpg)
 
-browser:
+### browser demo
 
 ![browser demo](https://raw.githubusercontent.com/TabSpace/colorogger/master/example/client.jpg)
 
