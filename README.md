@@ -1,5 +1,7 @@
 # colorogger
 
+![action-release](https://github.com/TabSpace/colorogger/workflows/action-release/badge.svg)
+
 A simple colorful logger. Both for browser and node-server. Easy to report and record.
 
 ## Demo
