@@ -1,4 +1,5 @@
 import cloneDeep from 'lodash/cloneDeep';
+import { LoggerOptions, ThemeOptions } from '../lib.d';
 
 const defaultLevels = {
   debug: 0,
@@ -67,7 +68,7 @@ export default class Logger {
   public icons: Object;
   public transport: Function;
 
-  public constructor(options?) {
+  public constructor(options?: LoggerOptions) {
     this.conf = {};
     this.meta = {};
     this.levels = {
@@ -105,27 +106,27 @@ export default class Logger {
   public stress(...args: any) {}
 
   // set theme
-  public theme(spec: any) {
-    if (spec) {
-      ['colors', 'icons'].forEach((prop) => {
-        if (typeof spec[prop] === 'object') {
-          Object.assign(this[prop], {
-            ...spec[prop],
-          });
-        }
-      });
-    }
+  public theme(spec: ThemeOptions) {
+    ['colors', 'icons'].forEach((prop) => {
+      if (typeof spec[prop] === 'object') {
+        Object.assign(this[prop], {
+          ...spec[prop],
+        });
+      }
+    });
   }
 
   // set config
-  public config(options) {
+  public config(options?: LoggerOptions) {
     const conf = {
       color: true,
       timeStamp: true,
+      print: true,
+      meta: {},
       timeTemplate: '{{YYYY}}/{{MM}}/{{DD}} {{hh}}:{{mm}}:{{ss}}.{{mss}}',
       wrapIcon: (str) => `[${str}]`,
       wrapTag: (str) => `[${str}]`,
-      print: true,
+      transport: () => {},
       ...options,
     };
     this.conf = conf;
