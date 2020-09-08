@@ -126,7 +126,7 @@ export default class Logger {
       timeTemplate: '{{YYYY}}/{{MM}}/{{DD}} {{hh}}:{{mm}}:{{ss}}.{{mss}}',
       wrapIcon: (str) => `[${str}]`,
       wrapTag: (str) => `[${str}]`,
-      transport: () => {},
+      transport: null,
       ...options,
     };
     this.conf = conf;

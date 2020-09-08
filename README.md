@@ -121,7 +121,7 @@ logger.log('log text');
 Resive message object.
 
 - type: `Function`
-- default: `undefined`
+- default: `null`
 
 Example:
 
