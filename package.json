@@ -6,7 +6,7 @@
   "scripts": {
     "prepublishOnly": "npm run build",
     "build": "rollup -c rollup.config.js",
-    "test": "jest ./test/exec",
+    "test": "jest --coverage ./test/exec",
     "fmt": "prettier --config ./.prettierrc.js --write ./src",
     "lint": "eslint ./src --fix",
     "example:server": "node ./example/server.js",
@@ -32,6 +32,7 @@
     "@types/lodash": "^4.14.161",
     "@typescript-eslint/eslint-plugin": "^3.10.1",
     "@typescript-eslint/parser": "^3.10.1",
+    "codecov": "^3.7.2",
     "commitizen": "^4.1.2",
     "conventional-changelog-cli": "^2.0.27",
     "cz-conventional-changelog": "^3.2.0",

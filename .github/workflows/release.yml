@@ -21,6 +21,8 @@ jobs:
         run: npm i
       - name: Test
         run: npm test
+      - name: Coverage
+        run: codecov -t ${{ secrets.CODECOV_TOKEN }}
       - name: Build
         run: npm run build
       - name: Semantic Release
