@@ -6,6 +6,8 @@
 ![action-release](https://github.com/TabSpace/colorogger/workflows/release/badge.svg)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 ![NPM](https://img.shields.io/npm/l/colorogger)
+[![codecov](https://codecov.io/gh/TabSpace/colorogger/branch/master/graph/badge.svg)](https://codecov.io/gh/TabSpace/colorogger)
+[![Package Quality](https://npm.packagequality.com/badge/colorogger.png)](https://packagequality.com/#?package=colorogger)
 
 A simple colorful logger. Both for browser and node-server. Easy to report and record.
 
