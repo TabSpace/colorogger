@@ -152,15 +152,128 @@ Set logger config.
 
 - param [Object] options: constructor options
 
+Example:
+
+```js
+const logger = new colorogger();
+
+logger.set({
+  meta: {
+    guid: 'guid_123',
+  },
+  transport(msg) {
+    console.log(msg);
+  }
+})
+
+logger.log('log text');
+// msg.content: ['log text']
+// msg.flag: ''
+// msg.grade: 1
+// msg.guid: 'guid_123'
+// msg.level: log
+// msg.time: 1599215203843
+```
+
 ### fork(options)
 
 Clone instance.
 
 - param [Object] options: constructor options
 
+Example:
+
+```js
+const logger = new colorogger({
+  meta: {
+    guid: 'guid_123',
+  },
+  transport(msg) {
+    console.log(msg);
+  }
+});
+
+logger.log('log text');
+// msg.content: ['log text']
+// msg.guid: 'guid_123'
+logger.success('success text');
+// msg.content: ['success text']
+// msg.guid: 'guid_123'
+```
+
 ### method(name, options?)
 
+Extend a method for logger instance.
+
+- param [String] name: method name
+- param [Object] options: method options
+  - param [String] options.level: method log level. optional value ['debug', 'log', 'info', 'warn', 'error'].
+  - param [String] options.flag: method flag name. will be appended to transport msg property.
+  - param [String] options.color: method color. use it will ignore theme color.
+
+Example:
+
+```js
+const logger = new colorogger({
+  transport(msg) {
+    console.log(msg);
+  }
+});
+
+logger.method('intro', {
+  level: 'info',
+  flag: 'intro',
+  color: '#ff9501',
+});
+
+logger.intro('intro text');
+// msg.content: ['intro text']
+// msg.flag: 'intro'
+// msg.level: 'info'
+```
+
 ### theme(spec)
+
+Custom color setting.
+
+- param [Object] options: theme options
+  - param [Object] options.colors: color options
+    - param [String] options.colors[name]: method name's color value
+  - param [Object] options.icons: icon options
+    - param [Object] options.icons[name]: method name's icon setting
+      - param [String] options.icons[name].icon: icon string
+      - param [String] options.icons[name].color: icon color
+
+Example:
+
+```js
+const logger = new colorogger({
+  transport(msg) {
+    console.log(msg);
+  }
+});
+
+logger.method('intro', {
+  level: 'info',
+  flag: 'intro',
+});
+
+logger.theme({
+  colors: {
+    intro: '#ff9501',
+  },
+  icons: {
+    intro: {
+      icon: 'i',
+      color: '#00ff00',
+    }
+  }
+});
+
+logger.intro('intro text');
+```
+
+![intro demo](https://raw.githubusercontent.com/TabSpace/colorogger/master/example/color-intro.jpg)
 
 ### destroy()
 
