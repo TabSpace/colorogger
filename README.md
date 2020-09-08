@@ -157,7 +157,7 @@ Example:
 ```js
 const logger = new colorogger();
 
-logger.set({
+logger.config({
   meta: {
     guid: 'guid_123',
   },
