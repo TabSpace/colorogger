@@ -91,14 +91,14 @@ Format time stamp.
 Format icon log text.
 
 - type: `Function`
-- default: `(str) => \`[${str}]\``
+- default: `(icon) => \`[${icon}]\``
 
 ### wrapTag
 
 Format meta key log text.
 
 - type: `Function`
-- default: `(str) => \`[${str}]\``
+- default: `(tag, key) => \`[${tag}]\``
 
 ### meta
 
