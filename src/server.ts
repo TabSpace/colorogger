@@ -1,8 +1,6 @@
 import chalk from 'chalk';
 import Logger from './mods/logger';
-import { formatTime } from './mods/time';
-
-const strTypes = ['undefined', 'number', 'boolean'];
+import { strTypes } from './mods/constants';
 
 function setColor(msg: any, color: string) {
   let str = msg;
@@ -24,82 +22,13 @@ class ServerLogger extends Logger {
     super(options);
   }
 
-  public output(options: any, para: Array<any>) {
-    const spec: any = {
-      level: 'log',
-      flag: '',
-      color: '',
-      ...options,
-    };
-    const { conf, meta, levels, colors, icons } = this;
-
-    const msg: any = {};
-    Object.assign(msg, meta);
-
-    msg.content = para;
-    msg.level = spec.level;
-    msg.flag = spec.flag;
-    msg.grade = levels[msg.level] || 0;
-    msg.time = Date.now();
-
-    let level = spec.level || 'log';
-    const icon = icons[spec.flag] || icons[level];
-    const color = spec.color || colors[spec.flag] || colors[level];
-
-    let method = level;
-    if (typeof console[method] !== 'function') {
-      method = 'log';
-    }
-
-    let args: Array<any> = [];
-    args = para.slice(0);
-    if (color && conf.color) {
-      args = args.map((item) => setColor(item, color));
-    }
-
-    Object.keys(meta)
-      .reverse()
-      .forEach((key) => {
-        const tag = meta[key] || '';
-        if (tag) {
-          let strTag = conf.wrapTag(tag, key);
-          if (conf.color) {
-            strTag = setColor(strTag, color);
-          }
-          if (strTag) {
-            args.unshift(strTag);
-          }
-        }
-      });
-
-    let tagLevel = conf.wrapIcon(level);
-    if (icon) {
-      let iconTag = icon.icon;
-      if (iconTag) {
-        tagLevel = conf.wrapIcon(iconTag);
-      }
-      let iconColor = icon.color || '';
-      if (conf.color) {
-        tagLevel = setColor(tagLevel, iconColor);
-      }
-      args.unshift(tagLevel);
-    }
-
-    if (conf.timeStamp) {
-      const time = formatTime(msg.time, {
-        template: conf.timeTemplate,
-      });
-      args.unshift(chalk.gray(time));
-    }
-
-    msg.__content = args;
-
-    if (typeof this.transport === 'function') {
-      this.transport(msg);
-    }
-    if (conf.print) {
-      console[method].apply(console, args);
-    }
+  public parseArgs(args: Array<any>) {
+    let arr = [];
+    args.forEach((item) => {
+      const content = setColor(item.content, item.color);
+      arr.push(content);
+    });
+    return arr;
   }
 }
 

@@ -1,4 +1,5 @@
 import cloneDeep from 'lodash/cloneDeep';
+import { formatTime } from './time';
 import { LoggerOptions, ThemeOptions } from '../lib.d';
 
 const defaultLevels = {
@@ -94,7 +95,6 @@ export default class Logger {
     });
   }
 
-  public output(options: any, para: Array<any>) {}
   public log(...args: any) {}
   public info(...args: any) {}
   public debug(...args: any) {}
@@ -165,5 +165,106 @@ export default class Logger {
     Object.keys(this).forEach((prop) => {
       this[prop] = null;
     });
+  }
+
+  public output(options: any, para: Array<any>) {
+    const spec: any = {
+      level: 'log',
+      flag: '',
+      color: '',
+      ...options,
+    };
+    const { conf, meta, levels, colors, icons } = this;
+
+    const msg: any = {};
+    Object.assign(msg, meta);
+
+    msg.content = para;
+    msg.level = spec.level;
+    msg.flag = spec.flag;
+    msg.grade = levels[msg.level] || 0;
+    msg.time = Date.now();
+
+    let level = spec.level || 'log';
+    const icon = icons[spec.flag] || icons[level];
+    const color = spec.color || colors[spec.flag] || colors[level];
+
+    let method = level;
+    if (typeof console[method] !== 'function') {
+      method = 'log';
+    }
+
+    let args: Array<any> = [];
+    args = para.slice(0);
+    args = args.map((item) => {
+      let itemColor = '';
+      if (conf.color && color) {
+        itemColor = color;
+      }
+      return {
+        color: itemColor,
+        content: item,
+      };
+    });
+
+    Object.keys(meta)
+      .reverse()
+      .forEach((key) => {
+        const tag = meta[key] || '';
+        if (tag) {
+          const strTag = conf.wrapTag(tag, key);
+          const itemTag = {
+            color: conf.color ? color : '',
+            content: strTag,
+          };
+          if (strTag) {
+            args.unshift(itemTag);
+          }
+        }
+      });
+
+    let tagLevel = conf.wrapIcon(level);
+    if (icon) {
+      let iconTag = icon.icon;
+      if (iconTag) {
+        tagLevel = conf.wrapIcon(iconTag);
+      }
+      const iconColor = icon.color || '';
+      const itemIcon = {
+        color: conf.color ? iconColor : '',
+        content: tagLevel,
+      };
+      args.unshift(itemIcon);
+    }
+
+    if (conf.timeStamp) {
+      const time = formatTime(msg.time, {
+        template: conf.timeTemplate,
+      });
+      args.unshift({
+        color: 'gray',
+        content: time,
+      });
+    }
+
+    msg.__content = this.parseArgs(args);
+
+    if (typeof this.transport === 'function') {
+      this.transport(msg);
+    }
+    if (conf.print) {
+      if (method === 'debug') {
+        method = 'log';
+      }
+      console[method].apply(console, msg.__content);
+    }
+  }
+
+  public parseArgs(args: Array<any>) {
+    let arr = [];
+    args.forEach((item) => {
+      arr.push(item.content);
+    });
+    return arr;
   }
 }
