@@ -82,19 +82,21 @@ class ClientLogger extends Logger {
       };
     });
 
-    Object.keys(meta).forEach((key) => {
-      const tag = meta[key] || '';
-      if (tag) {
-        const strTag = conf.wrapTag(tag, key);
-        const itemTag = {
-          color: conf.color ? color : '',
-          content: strTag,
-        };
-        if (strTag) {
-          args.unshift(itemTag);
+    Object.keys(meta)
+      .reverse()
+      .forEach((key) => {
+        const tag = meta[key] || '';
+        if (tag) {
+          const strTag = conf.wrapTag(tag, key);
+          const itemTag = {
+            color: conf.color ? color : '',
+            content: strTag,
+          };
+          if (strTag) {
+            args.unshift(itemTag);
+          }
         }
-      }
-    });
+      });
 
     let tagLevel = conf.wrapIcon(level);
     if (icon) {

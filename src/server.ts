@@ -57,18 +57,20 @@ class ServerLogger extends Logger {
       args = args.map((item) => setColor(item, color));
     }
 
-    Object.keys(meta).forEach((key) => {
-      const tag = meta[key] || '';
-      if (tag) {
-        let strTag = conf.wrapTag(tag, key);
-        if (conf.color) {
-          strTag = setColor(strTag, color);
+    Object.keys(meta)
+      .reverse()
+      .forEach((key) => {
+        const tag = meta[key] || '';
+        if (tag) {
+          let strTag = conf.wrapTag(tag, key);
+          if (conf.color) {
+            strTag = setColor(strTag, color);
+          }
+          if (strTag) {
+            args.unshift(strTag);
+          }
         }
-        if (strTag) {
-          args.unshift(strTag);
-        }
-      }
-    });
+      });
 
     let tagLevel = conf.wrapIcon(level);
     if (icon) {

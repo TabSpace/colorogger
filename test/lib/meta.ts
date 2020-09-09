@@ -119,8 +119,8 @@ export default function metaTest($logger, mode) {
     });
     if (mode === 'server') {
       test('msg.tag wrap', () => {
-        $assert.equal(msg.__content[2], '(tagw-value)');
-        $assert.equal(msg.__content[3], '[tagn-value]');
+        $assert.equal(msg.__content[4], '[tagn-value]');
+        $assert.equal(msg.__content[5], '(tagw-value)');
         $assert(msg.__content.indexOf('[tagv-value]') < 0);
       });
     } else {
