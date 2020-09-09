@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import Logger from './mods/logger';
 import { formatTime } from './mods/time';
 
-const strTypes = ['undefined', 'null', 'number', 'boolean'];
+const strTypes = ['undefined', 'number', 'boolean'];
 
 function setColor(msg: any, color: string) {
   let str = msg;
@@ -60,11 +60,13 @@ class ServerLogger extends Logger {
     Object.keys(meta).forEach((key) => {
       const tag = meta[key] || '';
       if (tag) {
-        let strTag = conf.wrapTag(tag);
+        let strTag = conf.wrapTag(tag, key);
         if (conf.color) {
           strTag = setColor(strTag, color);
         }
-        args.unshift(strTag);
+        if (strTag) {
+          args.unshift(strTag);
+        }
       }
     });
 

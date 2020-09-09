@@ -124,8 +124,8 @@ export default class Logger {
       print: true,
       meta: {},
       timeTemplate: '{{YYYY}}/{{MM}}/{{DD}} {{hh}}:{{mm}}:{{ss}}.{{mss}}',
-      wrapIcon: (str) => `[${str}]`,
-      wrapTag: (str) => `[${str}]`,
+      wrapIcon: (icon) => `[${icon}]`,
+      wrapTag: (tag, key) => `[${tag}]`,
       transport: null,
       ...options,
     };

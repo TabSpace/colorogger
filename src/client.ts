@@ -85,12 +85,14 @@ class ClientLogger extends Logger {
     Object.keys(meta).forEach((key) => {
       const tag = meta[key] || '';
       if (tag) {
-        const strTag = conf.wrapTag(tag);
+        const strTag = conf.wrapTag(tag, key);
         const itemTag = {
           color: conf.color ? color : '',
           content: strTag,
         };
-        args.unshift(itemTag);
+        if (strTag) {
+          args.unshift(itemTag);
+        }
       }
     });
 
