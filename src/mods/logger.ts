@@ -1,4 +1,5 @@
 import cloneDeep from 'lodash/cloneDeep';
+import isPlainObject from 'lodash/isPlainObject';
 import { formatTime } from './time';
 import { LoggerOptions, ThemeOptions } from '../lib.d';
 
@@ -142,7 +143,7 @@ export default class Logger {
   public fork(options?) {
     const clone = Object.create(this);
     Object.keys(this).forEach((key) => {
-      if (typeof this[key] === 'object') {
+      if (isPlainObject(this[key])) {
         clone[key] = cloneDeep(this[key]);
       } else {
         clone[key] = this[key];
