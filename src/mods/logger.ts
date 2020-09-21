@@ -123,6 +123,7 @@ export default class Logger {
       color: true,
       timeStamp: true,
       print: true,
+      metaColor: false,
       meta: {},
       timeTemplate: '{{YYYY}}/{{MM}}/{{DD}} {{hh}}:{{mm}}:{{ss}}.{{mss}}',
       wrapIcon: (icon) => `[${icon}]`,
@@ -215,9 +216,15 @@ export default class Logger {
         if (tag) {
           const strTag = conf.wrapTag(tag, key);
           const itemTag = {
-            color: conf.color ? color : '',
+            color: 'gray',
             content: strTag,
           };
+          if (conf.metaColor) {
+            itemTag.color = conf.color ? color : 'gray';
+            if (isPlainObject(conf.metaColor)) {
+              itemTag.color = conf.metaColor[key] || 'gray';
+            }
+          }
           if (strTag) {
             args.unshift(itemTag);
           }
