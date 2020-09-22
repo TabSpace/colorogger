@@ -180,7 +180,7 @@ logger.log('log text');
 // msg.time: 1599215203843
 ```
 
-### fork(options)
+### fork(options?)
 
 Clone instance.
 
@@ -197,11 +197,12 @@ const logger = new colorogger({
     console.log(msg);
   }
 });
+const forkLogger = logger.fork();
 
-logger.log('log text');
+forkLogger.log('log text');
 // msg.content: ['log text']
 // msg.guid: 'guid_123'
-logger.success('success text');
+forkLogger.success('success text');
 // msg.content: ['success text']
 // msg.guid: 'guid_123'
 ```
@@ -212,9 +213,9 @@ Extend a method for logger instance.
 
 - param [String] name: method name
 - param [Object] options: method options
-  - param [String] options.level: method log level. optional value ['debug', 'log', 'info', 'warn', 'error'].
-  - param [String] options.flag: method flag name. will be appended to transport msg property.
-  - param [String] options.color: method color. use it will ignore theme color.
+  - param [String] options.level: Method log level. Optional value: ['debug', 'log', 'info', 'warn', 'error'].
+  - param [String] options.flag: Method flag name, will be appended to transport msg property.
+  - param [String] options.color: Method color, use it will ignore theme color.
 
 Example:
 
@@ -237,15 +238,15 @@ logger.intro('intro text');
 // msg.level: 'info'
 ```
 
-### theme(spec)
+### theme(options)
 
 Custom color setting.
 
 - param [Object] options: theme options
-  - param [Object] options.colors: color options
-    - param [String] options.colors[name]: method name's color value
+  - param [Object] options.colors: Configure the color of the method output log.
+    - param [String] options.colors[name]: color value
   - param [Object] options.icons: icon options
-    - param [Object] options.icons[name]: method name's icon setting
+    - param [Object] options.icons[name]: Configure the icon for the method output log.
       - param [String] options.icons[name].icon: icon string
       - param [String] options.icons[name].color: icon color
 
