@@ -33,7 +33,7 @@ class ClientLogger extends Logger {
     });
 
     if (strings.length) {
-      arr.push(strings.map((str) => `%c${str}`).join(' '));
+      arr.push(strings.map((str) => `%c ${str}`).join(' '));
       arr = arr.concat(colors);
     }
     arr = arr.concat(extras);

@@ -16,7 +16,7 @@ const defaultColors = {
   info: '',
   debug: '',
   error: 'red',
-  warn: 'yellow',
+  warn: '#ffd700',
   success: 'green',
   fail: 'red',
   tip: 'cyan',
@@ -30,7 +30,7 @@ const defaultIcons = {
   },
   info: {
     icon: '*',
-    color: 'blue',
+    color: '#1e90ff',
   },
   debug: {
     icon: '#',
@@ -38,7 +38,7 @@ const defaultIcons = {
   },
   warn: {
     icon: '!',
-    color: 'yellow',
+    color: '#ffd700',
   },
   error: {
     icon: 'x',

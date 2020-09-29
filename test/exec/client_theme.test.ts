@@ -35,7 +35,7 @@ describe('info theme', () => {
     $assert.equal(msg.content[0], 'info');
   });
   test('info icon', () => {
-    $assert(msg.__content[0].indexOf('%c[i]') > 0);
+    $assert(msg.__content[0].indexOf('%c [i]') > 0);
     $assert.equal(msg.__content[2], 'color: ;');
   });
   test('info color', () => {
@@ -52,7 +52,7 @@ describe('debug theme', () => {
     $assert.equal(msg.content[0], 'debug');
   });
   test('debug icon', () => {
-    $assert(msg.__content[0].indexOf('%c[d]') > 0);
+    $assert(msg.__content[0].indexOf('%c [d]') > 0);
     $assert.equal(msg.__content[2], 'color: #ff9501;');
   });
   test('debug color', () => {
