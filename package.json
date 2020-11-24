@@ -9,6 +9,7 @@
     "test": "jest --coverage ./test/exec",
     "fmt": "prettier --config ./.prettierrc.js --write ./src",
     "lint": "eslint ./src --fix",
+    "dev": "npm run example:client",
     "example:server": "node ./example/server.js",
     "example:client": "http-server ./",
     "cz": "git add . && git cz",
