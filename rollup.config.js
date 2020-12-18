@@ -1,6 +1,7 @@
 import typescript from 'rollup-plugin-typescript2'
 import commonjs from '@rollup/plugin-commonjs'
 import { nodeResolve } from '@rollup/plugin-node-resolve';
+import pkg from './package.json';
 
 const conf = [];
 
@@ -26,10 +27,7 @@ conf.push({
     exports: 'default',
     format: 'cjs',
   },
-  external: [
-    'chalk',
-    'lodash/cloneDeep',
-  ],
+  external: Object.keys(pkg.dependencies),
   plugins: [
     typescript({
       ...typescriptConf,
