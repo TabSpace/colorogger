@@ -96,8 +96,10 @@
   },
   "files": [
     "lib",
-    "src"
+    "src",
+    "index.d.ts"
   ],
+  "types": "index.d.ts",
   "author": "pillar0514@163.com",
   "license": "MIT",
   "dependencies": {

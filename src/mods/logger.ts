@@ -61,14 +61,6 @@ const defaultIcons = {
   },
 };
 
-declare type ThemeProp = 'colors' | 'icons';
-
-export interface OutputOptions {
-  level?: string;
-  flag?: string;
-  color?: string;
-}
-
 export default class Logger {
   public conf: LoggerOptions;
   public meta: PlainObject;
@@ -261,7 +253,8 @@ export default class Logger {
       });
     }
 
-    msg.__content = this.parseArgs(args);
+    const contentArgs = this.parseArgs(args);
+    msg.__content = contentArgs;
 
     if (typeof this.transport === 'function') {
       this.transport(msg);
@@ -270,7 +263,7 @@ export default class Logger {
       if (method === 'debug') {
         method = 'log';
       }
-      console[method](...msg.__content);
+      console[method](...contentArgs);
     }
   }
 

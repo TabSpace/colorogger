@@ -4,7 +4,7 @@ import { strTypes } from './mods/constants';
 // run at browser
 // @see http://voidcanvas.com/make-console-log-output-colorful-and-stylish-in-browser-node/
 
-export class ClientLogger extends Logger {
+class ClientLogger extends Logger {
   public constructor(options?: LoggerOptions) {
     super(options);
   }

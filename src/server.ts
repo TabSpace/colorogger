@@ -14,14 +14,14 @@ function setColor(msg: PlainType, color: string) {
       const chalkColor: keyof Chalk = color as keyof Chalk;
       const chalkMethod = chalk[chalkColor] as Chalk;
       if (typeof chalkMethod === 'function') {
-        chalkMethod(str);
+        str = chalkMethod(str);
       }
     }
   }
   return str;
 }
 
-export class ServerLogger extends Logger {
+class ServerLogger extends Logger {
   public constructor(options?: LoggerOptions) {
     super(options);
   }

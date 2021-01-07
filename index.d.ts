@@ -4,6 +4,14 @@ interface PlainObject {
   [key: string]: PlainType | PlainType[];
 }
 
+declare type ThemeProp = 'colors' | 'icons';
+
+interface OutputOptions {
+  level?: string;
+  flag?: string;
+  color?: string;
+}
+
 interface LoggerOptions {
   color?: boolean;
   timeStamp?: boolean;
