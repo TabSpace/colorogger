@@ -1,9 +1,10 @@
 import $assert from 'power-assert';
+import { Factory } from './types';
 
-export default function metaTest($logger, mode) {
-  let msg = null;
+export default function metaTest(Logger: Factory, mode: string) {
+  let msg: PlainType = null;
 
-  const logger = new $logger({
+  const logger = new Logger({
     meta: {
       url: '/url',
     },

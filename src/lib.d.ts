@@ -1,15 +1,22 @@
-export interface LoggerOptions {
-  color?: Boolean;
-  timeStamp?: Boolean;
-  meta?: Object;
-  timeTemplate?: String;
-  wrapIcon?: Function;
-  wrapTag?: Function;
-  print?: Boolean;
-  transport?: Function;
+declare type PlainType = undefined | null | number | string | boolean | Regexp | Date | PlainObject;
+
+interface PlainObject {
+  [key: string]: PlainType | PlainType[];
 }
 
-export interface ThemeOptions {
-  colors?: Object;
-  icons?: Object;
+interface LoggerOptions {
+  color?: boolean;
+  timeStamp?: boolean;
+  meta?: PlainObject;
+  metaColor?: PlainType;
+  timeTemplate?: string;
+  print?: boolean;
+  wrapIcon?: (icon: string) => string;
+  wrapTag?: (tag: string, key?: string) => string;
+  transport?: (...args: PlainType[]) => void;
+}
+
+interface ThemeOptions {
+  colors?: PlainObject;
+  icons?: PlainObject;
 }

@@ -1,7 +1,7 @@
 import $assert from 'power-assert';
 import $logger from '../../src/client';
 
-let msg = null;
+let msg: PlainType = null;
 
 const logger = new $logger({
   transport: (message) => {

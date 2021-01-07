@@ -3,7 +3,7 @@ import $logger from '../../src/server';
 
 const ci = process.env.CI;
 
-let msg = null;
+let msg: PlainType = null;
 
 const logger = new $logger({
   transport: (message) => {

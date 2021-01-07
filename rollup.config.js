@@ -7,7 +7,7 @@ const conf = [];
 
 const typescriptConf = {
   target: 'es5',
-  sourceMap: false,
+  sourceMap: true,
   module: 'ESNext',
   esModuleInterop: true,
   rollupCommonJSResolveHack: true,
@@ -27,6 +27,7 @@ conf.push({
     exports: 'default',
     format: 'cjs',
   },
+  sourceMap: true,
   external: Object.keys(pkg.dependencies),
   plugins: [
     typescript({
@@ -43,6 +44,7 @@ conf.push({
     file: 'lib/client.js',
     format: 'umd',
   },
+  sourceMap: true,
   plugins: [
     nodeResolve(),
     commonjs(),

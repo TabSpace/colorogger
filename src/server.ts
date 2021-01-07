@@ -1,29 +1,33 @@
-import chalk from 'chalk';
+import chalk, { Chalk } from 'chalk';
 import Logger from './mods/logger';
 import { strTypes } from './mods/constants';
 
-function setColor(msg: any, color: string) {
+function setColor(msg: PlainType, color: string) {
   let str = msg;
   if (strTypes.indexOf(typeof str) >= 0) {
     str = String(str);
   }
   if (color && typeof str === 'string') {
-    if (typeof chalk[color] === 'function') {
-      str = chalk[color](str);
-    } else if (color.charAt(0) === '#') {
+    if (color.charAt(0) === '#') {
       str = chalk.hex(color)(str);
+    } else {
+      const chalkColor: keyof Chalk = color as keyof Chalk;
+      const chalkMethod = chalk[chalkColor] as Chalk;
+      if (typeof chalkMethod === 'function') {
+        chalkMethod(str);
+      }
     }
   }
   return str;
 }
 
-class ServerLogger extends Logger {
-  public constructor(options?) {
+export class ServerLogger extends Logger {
+  public constructor(options?: LoggerOptions) {
     super(options);
   }
 
-  public parseArgs(args: Array<any>) {
-    let arr = [];
+  public parseArgs(args: PlainType[]): PlainType[] {
+    const arr: PlainType[] = [];
     args.forEach((item) => {
       const content = setColor(item.content, item.color);
       arr.push(content);

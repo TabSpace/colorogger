@@ -3,7 +3,11 @@
     "target": "es5",
     "sourceMap": true,
     "module": "commonjs",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "noImplicitThis": false,
+    "declaration": true
   },
   "exclude": [
     "lib",

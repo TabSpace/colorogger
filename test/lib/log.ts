@@ -1,8 +1,9 @@
 import $assert from 'power-assert';
+import { Factory } from './types';
 
-export default function logTest($logger, mode) {
-  let msg = null;
-  const logger = new $logger({
+export default function logTest(Logger: Factory, mode: string) {
+  let msg: PlainType = null;
+  const logger = new Logger({
     transport: (message) => {
       msg = message;
       console.log(msg);

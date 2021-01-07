@@ -1,7 +1,6 @@
 import cloneDeep from 'lodash/cloneDeep';
 import isPlainObject from 'lodash/isPlainObject';
 import { formatTime } from './time';
-import { LoggerOptions, ThemeOptions } from '../lib.d';
 
 const defaultLevels = {
   debug: 0,
@@ -62,13 +61,31 @@ const defaultIcons = {
   },
 };
 
+declare type ThemeProp = 'colors' | 'icons';
+
+export interface OutputOptions {
+  level?: string;
+  flag?: string;
+  color?: string;
+}
+
 export default class Logger {
-  public conf: any;
-  public meta: Object;
-  public levels: Object;
-  public colors: Object;
-  public icons: Object;
-  public transport: Function;
+  public conf: LoggerOptions;
+  public meta: PlainObject;
+  public levels: PlainObject;
+  public colors: PlainObject;
+  public icons: PlainObject;
+  public transport: (...args: PlainType[]) => void;
+  public log: (...args: PlainType[]) => void;
+  public info: (...args: PlainType[]) => void;
+  public debug: (...args: PlainType[]) => void;
+  public warn: (...args: PlainType[]) => void;
+  public error: (...args: PlainType[]) => void;
+  public success: (...args: PlainType[]) => void;
+  public fail: (...args: PlainType[]) => void;
+  public tip: (...args: PlainType[]) => void;
+  public stress: (...args: PlainType[]) => void;
+  [key: string]: PlainType | ((...args: string[]) => void);
 
   public constructor(options?: LoggerOptions) {
     this.conf = {};
@@ -96,38 +113,26 @@ export default class Logger {
     });
   }
 
-  public log(...args: any) {}
-  public info(...args: any) {}
-  public debug(...args: any) {}
-  public warn(...args: any) {}
-  public error(...args: any) {}
-  public success(...args: any) {}
-  public fail(...args: any) {}
-  public tip(...args: any) {}
-  public stress(...args: any) {}
-
   // set theme
-  public theme(spec: ThemeOptions) {
-    ['colors', 'icons'].forEach((prop) => {
-      if (typeof spec[prop] === 'object') {
-        Object.assign(this[prop], {
-          ...spec[prop],
-        });
-      }
+  public theme(spec: ThemeOptions): void {
+    ['colors', 'icons'].forEach((prop: ThemeProp) => {
+      Object.assign(this[prop], {
+        ...spec[prop],
+      });
     });
   }
 
   // set config
-  public config(options?: LoggerOptions) {
-    const conf = {
+  public config(options?: LoggerOptions): void {
+    const conf: LoggerOptions = {
       color: true,
       timeStamp: true,
       print: true,
       metaColor: false,
       meta: {},
       timeTemplate: '{{YYYY}}/{{MM}}/{{DD}} {{hh}}:{{mm}}:{{ss}}.{{mss}}',
-      wrapIcon: (icon) => `[${icon}]`,
-      wrapTag: (tag, key) => `[${tag}]`,
+      wrapIcon: (icon: string) => `[${icon}]`,
+      wrapTag: (tag: string) => `[${tag}]`,
       transport: null,
       ...options,
     };
@@ -141,13 +146,14 @@ export default class Logger {
   }
 
   // clone logger
-  public fork(options?) {
+  public fork(options?: LoggerOptions): Logger {
     const clone = Object.create(this);
-    Object.keys(this).forEach((key) => {
-      if (isPlainObject(this[key])) {
-        clone[key] = cloneDeep(this[key]);
+    Object.keys(this).forEach((key: string) => {
+      const prop = this[key];
+      if (isPlainObject(prop)) {
+        clone[key] = cloneDeep(prop);
       } else {
-        clone[key] = this[key];
+        clone[key] = prop;
       }
     });
     clone.config(options);
@@ -155,22 +161,22 @@ export default class Logger {
   }
 
   // add custom method
-  public method(name: string, options?) {
-    this[name] = function (...para) {
+  public method(name: string, options?: OutputOptions): void {
+    this[name] = function (...para: PlainType[]) {
       const opts = { ...options };
       this.output(opts, para);
     };
   }
 
-  public destroy() {
+  public destroy(): void {
     this.conf.transport = null;
     Object.keys(this).forEach((prop) => {
       this[prop] = null;
     });
   }
 
-  public output(options: any, para: Array<any>) {
-    const spec: any = {
+  public output(options: OutputOptions, para: PlainType[]): void {
+    const spec: PlainObject = {
       level: 'log',
       flag: '',
       color: '',
@@ -178,7 +184,7 @@ export default class Logger {
     };
     const { conf, meta, levels, colors, icons } = this;
 
-    const msg: any = {};
+    const msg: PlainObject = {};
     Object.assign(msg, meta);
 
     msg.content = para;
@@ -187,16 +193,16 @@ export default class Logger {
     msg.grade = levels[msg.level] || 0;
     msg.time = Date.now();
 
-    let level = spec.level || 'log';
+    const level = spec.level || 'log';
     const icon = icons[spec.flag] || icons[level];
     const color = spec.color || colors[spec.flag] || colors[level];
 
-    let method = level;
+    let method = String(level) as keyof Console;
     if (typeof console[method] !== 'function') {
       method = 'log';
     }
 
-    let args: Array<any> = [];
+    let args: PlainType[] = [];
     args = para.slice(0);
     args = args.map((item) => {
       let itemColor = '';
@@ -215,7 +221,7 @@ export default class Logger {
         const tag = meta[key] || '';
         if (tag) {
           const strTag = conf.wrapTag(tag, key);
-          const itemTag = {
+          const itemTag: PlainObject = {
             color: 'gray',
             content: strTag,
           };
@@ -233,7 +239,7 @@ export default class Logger {
 
     let tagLevel = conf.wrapIcon(level);
     if (icon) {
-      let iconTag = icon.icon;
+      const iconTag = icon.icon;
       if (iconTag) {
         tagLevel = conf.wrapIcon(iconTag);
       }
@@ -264,12 +270,12 @@ export default class Logger {
       if (method === 'debug') {
         method = 'log';
       }
-      console[method].apply(console, msg.__content);
+      console[method](...msg.__content);
     }
   }
 
-  public parseArgs(args: Array<any>) {
-    let arr = [];
+  public parseArgs(args: PlainType[]): PlainType[] {
+    const arr: PlainType[] = [];
     args.forEach((item) => {
       arr.push(item.content);
     });

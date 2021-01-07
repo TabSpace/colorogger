@@ -1,7 +1,8 @@
 import $assert from 'power-assert';
+import { Factory } from './types';
 
-export default function baseTest($logger) {
-  const logger = new $logger();
+export default function baseTest(Logger: Factory) {
+  const logger = new Logger();
 
   describe('logger methods', () => {
     test('logger has fn log', () => {

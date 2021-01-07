@@ -1,14 +1,9 @@
 import $assert from 'power-assert';
 import $logger from '../../src/client';
 
-interface CustomLogger extends $logger {
-  temp?: Function;
-  custom?: Function;
-}
+let msg: PlainType = null;
 
-let msg = null;
-
-const logger: CustomLogger = new $logger({
+const logger = new $logger({
   transport: (message) => {
     msg = message;
   },

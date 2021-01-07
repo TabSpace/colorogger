@@ -4,16 +4,16 @@ import { strTypes } from './mods/constants';
 // run at browser
 // @see http://voidcanvas.com/make-console-log-output-colorful-and-stylish-in-browser-node/
 
-class ClientLogger extends Logger {
-  public constructor(options?) {
+export class ClientLogger extends Logger {
+  public constructor(options?: LoggerOptions) {
     super(options);
   }
 
-  public parseArgs(args: Array<any>) {
-    let arr = [];
-    const strings = [];
-    const colors = [];
-    const extras = [];
+  public parseArgs(args: PlainType[]): PlainType[] {
+    let arr: PlainType[] = [];
+    const strings: string[] = [];
+    const colors: string[] = [];
+    const extras: PlainType[] = [];
     let breaked = false;
     args.forEach((item) => {
       if (!breaked) {

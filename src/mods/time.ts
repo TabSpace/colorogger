@@ -44,15 +44,47 @@ import { substitute } from './str';
  * 	// 2015年09月09日 周三 14时19分42秒
  */
 
-function rLimit(num: number, width: number) {
+function rLimit(num: number, width: number): string {
   const str: string = fixTo(num, width);
   const delta: number = str.length - width;
   return delta > 0 ? str.substr(delta) : str;
 }
 
-export function formatTime(time: Date | number, spec: object) {
+export interface DateFormatOptions {
+  weekday?: string[];
+  template?: string;
+}
+
+export interface DateObject {
+  year?: number;
+  month?: number;
+  date?: number;
+  day?: number;
+  hours?: number;
+  miniutes?: number;
+  seconds?: number;
+  milliSeconds?: number;
+  YYYY?: string;
+  YY?: string;
+  Y?: string;
+  MM?: string;
+  M?: string;
+  DD?: string;
+  D?: string;
+  d?: string;
+  hh?: string;
+  h?: string;
+  mm?: string;
+  m?: string;
+  ss?: string;
+  s?: string;
+  mss?: string;
+  ms?: string;
+}
+
+export function formatTime(time: Date | number, spec: DateFormatOptions): string {
   let output = '';
-  let data: any = {};
+  const data: DateObject = {};
   const conf = {
     weekday: '日一二三四五六'.split(''),
     template: '{{YYYY}}-{{MM}}-{{DD}} {{hh}}:{{mm}}',
@@ -70,27 +102,27 @@ export function formatTime(time: Date | number, spec: object) {
 
   data.YYYY = rLimit(data.year, 4);
   data.YY = rLimit(data.year, 2);
-  data.Y = data.year;
+  data.Y = String(data.year);
 
   data.MM = fixTo(data.month, 2);
-  data.M = data.month;
+  data.M = String(data.month);
 
   data.DD = fixTo(data.date, 2);
-  data.D = data.date;
+  data.D = String(data.date);
 
   data.d = conf.weekday[data.day];
 
   data.hh = fixTo(data.hours, 2);
-  data.h = data.hours;
+  data.h = String(data.hours);
 
   data.mm = fixTo(data.miniutes, 2);
-  data.m = data.miniutes;
+  data.m = String(data.miniutes);
 
   data.ss = fixTo(data.seconds, 2);
-  data.s = data.seconds;
+  data.s = String(data.seconds);
 
   data.mss = fixTo(data.milliSeconds, 3);
-  data.ms = data.milliSeconds;
+  data.ms = String(data.milliSeconds);
 
   output = substitute(conf.template, data);
   return output;
