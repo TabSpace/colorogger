@@ -1,4 +1,4 @@
-declare type PlainType = undefined | null | number | string | boolean | Regexp | Date | PlainObject;
+declare type PlainType = undefined | null | number | string | boolean | RegExp | Date | PlainObject;
 
 interface PlainObject {
   [key: string]: PlainType | PlainType[];
