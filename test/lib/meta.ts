@@ -1,8 +1,9 @@
 import $assert from 'power-assert';
+import $lodash from 'lodash';
 import { Factory } from './types';
 
 export default function metaTest(Logger: Factory, mode: string) {
-  let msg: PlainType = null;
+  let msg: Message = null;
 
   const logger = new Logger({
     meta: {
@@ -120,14 +121,14 @@ export default function metaTest(Logger: Factory, mode: string) {
     });
     if (mode === 'server') {
       test('msg.tag wrap', () => {
-        $assert(msg.__content[4].indexOf('[tagn-value]') >= 0);
-        $assert(msg.__content[5].indexOf('(tagw-value)') >= 0);
+        $assert(String(msg.__content[4]).indexOf('[tagn-value]') >= 0);
+        $assert(String(msg.__content[5]).indexOf('(tagw-value)') >= 0);
         $assert(msg.__content.join(' ').indexOf('[tagv-value]') < 0);
       });
     } else {
       test('msg.tag wrap', () => {
-        $assert(msg.__content[0].indexOf('(tagw-value)') > 0);
-        $assert(msg.__content[0].indexOf('tagv-value') < 0);
+        $assert(String(msg.__content[0]).indexOf('(tagw-value)') > 0);
+        $assert(String(msg.__content[0]).indexOf('tagv-value') < 0);
       });
     }
   });

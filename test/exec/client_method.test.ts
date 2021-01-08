@@ -1,7 +1,7 @@
 import $assert from 'power-assert';
 import $logger from '../../src/client';
 
-let msg: PlainType = null;
+let msg: Message = null;
 
 const logger = new $logger({
   transport: (message) => {
@@ -28,7 +28,9 @@ logger.theme({
 
 describe('temp method', () => {
   beforeAll(() => {
-    logger.temp('t1');
+    if (typeof logger.temp === 'function') {
+      logger.temp('t1');
+    }
   });
 
   test('temp msg.content', () => {
@@ -44,7 +46,9 @@ describe('temp method', () => {
 
 describe('custom method', () => {
   beforeAll(() => {
-    logger.custom('c1');
+    if (typeof logger.custom === 'function') {
+      logger.custom('c1');
+    }
   });
 
   test('custom msg.content', () => {

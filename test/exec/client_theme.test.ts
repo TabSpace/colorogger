@@ -1,7 +1,8 @@
 import $assert from 'power-assert';
+import $lodash from 'lodash';
 import $logger from '../../src/client';
 
-let msg: PlainType = null;
+let msg: Message = null;
 
 const logger = new $logger({
   transport: (message) => {
@@ -35,7 +36,7 @@ describe('info theme', () => {
     $assert.equal(msg.content[0], 'info');
   });
   test('info icon', () => {
-    $assert(msg.__content[0].indexOf('%c [i]') > 0);
+    $assert(String(msg.__content[0]).indexOf('%c [i]') > 0);
     $assert.equal(msg.__content[2], 'color: ;');
   });
   test('info color', () => {
@@ -52,13 +53,13 @@ describe('debug theme', () => {
     $assert.equal(msg.content[0], 'debug');
   });
   test('debug icon', () => {
-    $assert(msg.__content[0].indexOf('%c [d]') > 0);
+    $assert(String(msg.__content[0]).indexOf('%c [d]') > 0);
     $assert.equal(msg.__content[2], 'color: #ff9501;');
   });
   test('debug color', () => {
     $assert.equal(msg.__content[3], 'color: #ff9501;');
   });
   test('debug extra', () => {
-    $assert.equal(msg.__content[4].a, 1);
+    $assert.equal($lodash.get(msg, '__content[4].a'), 1);
   });
 });

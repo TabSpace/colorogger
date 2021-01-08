@@ -1,8 +1,9 @@
 import $assert from 'power-assert';
+import $lodash from 'lodash';
 import { Factory } from './types';
 
 export default function logTest(Logger: Factory, mode: string) {
-  let msg: PlainType = null;
+  let msg: Message = null;
   const logger = new Logger({
     transport: (message) => {
       msg = message;
@@ -51,7 +52,7 @@ export default function logTest(Logger: Factory, mode: string) {
       $assert(Array.isArray(msg.content));
       $assert.equal(msg.content[0], 'info');
       $assert.equal(typeof msg.content[2], 'object');
-      $assert.equal(msg.content[2].a, 1);
+      $assert.equal($lodash.get(msg, 'content[2].a'), 1);
       if (mode === 'client') {
         $assert.equal(typeof msg.__content[msg.__content.length - 1], 'object');
         $assert.equal(typeof msg.__content[msg.__content.length - 2], 'object');
@@ -92,7 +93,9 @@ export default function logTest(Logger: Factory, mode: string) {
 
   describe('logger.special', () => {
     beforeAll(() => {
-      logger.special(false);
+      if (typeof logger.special === 'function') {
+        logger.special(false);
+      }
     });
 
     test('msg.content', () => {

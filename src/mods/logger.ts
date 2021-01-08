@@ -66,18 +66,18 @@ export default class Logger {
   public meta: PlainObject;
   public levels: PlainObject;
   public colors: PlainObject;
-  public icons: PlainObject;
-  public transport: (...args: PlainType[]) => void;
-  public log: (...args: PlainType[]) => void;
-  public info: (...args: PlainType[]) => void;
-  public debug: (...args: PlainType[]) => void;
-  public warn: (...args: PlainType[]) => void;
-  public error: (...args: PlainType[]) => void;
-  public success: (...args: PlainType[]) => void;
-  public fail: (...args: PlainType[]) => void;
-  public tip: (...args: PlainType[]) => void;
-  public stress: (...args: PlainType[]) => void;
-  [key: string]: PlainType | ((...args: string[]) => void);
+  public icons: IconOptions;
+  public transport: (msg: Message) => void;
+  public log: (...args: unknown[]) => void;
+  public info: (...args: unknown[]) => void;
+  public debug: (...args: unknown[]) => void;
+  public warn: (...args: unknown[]) => void;
+  public error: (...args: unknown[]) => void;
+  public success: (...args: unknown[]) => void;
+  public fail: (...args: unknown[]) => void;
+  public tip: (...args: unknown[]) => void;
+  public stress: (...args: unknown[]) => void;
+  [key: string]: ((...args: unknown[]) => void) | unknown;
 
   public constructor(options?: LoggerOptions) {
     this.conf = {};
@@ -154,7 +154,7 @@ export default class Logger {
 
   // add custom method
   public method(name: string, options?: OutputOptions): void {
-    this[name] = function (...para: PlainType[]) {
+    this[name] = function (...para: string[]) {
       const opts = { ...options };
       this.output(opts, para);
     };
@@ -167,8 +167,8 @@ export default class Logger {
     });
   }
 
-  public output(options: OutputOptions, para: PlainType[]): void {
-    const spec: PlainObject = {
+  public output(options: OutputOptions, para: unknown[]): void {
+    const spec = {
       level: 'log',
       flag: '',
       color: '',
@@ -176,30 +176,32 @@ export default class Logger {
     };
     const { conf, meta, levels, colors, icons } = this;
 
-    const msg: PlainObject = {};
+    const msg: Message = {};
     Object.assign(msg, meta);
 
+    const level = String(spec.level) || 'log';
+    const flag = String(spec.flag);
+
     msg.content = para;
-    msg.level = spec.level;
-    msg.flag = spec.flag;
-    msg.grade = levels[msg.level] || 0;
+    msg.level = level;
+    msg.flag = flag;
+    msg.grade = Number(levels[level]) || 0;
     msg.time = Date.now();
 
-    const level = spec.level || 'log';
-    const icon = icons[spec.flag] || icons[level];
-    const color = spec.color || colors[spec.flag] || colors[level];
+    const icon = icons[String(spec.flag)] || icons[level];
+    const color = spec.color || colors[flag] || colors[level];
 
     let method = String(level) as keyof Console;
     if (typeof console[method] !== 'function') {
       method = 'log';
     }
 
-    let args: PlainType[] = [];
+    let args = [];
     args = para.slice(0);
     args = args.map((item) => {
       let itemColor = '';
       if (conf.color && color) {
-        itemColor = color;
+        itemColor = String(color);
       }
       return {
         color: itemColor,
@@ -210,7 +212,7 @@ export default class Logger {
     Object.keys(meta)
       .reverse()
       .forEach((key) => {
-        const tag = meta[key] || '';
+        const tag = String(meta[key]) || '';
         if (tag) {
           const strTag = conf.wrapTag(tag, key);
           const itemTag: PlainObject = {
@@ -219,8 +221,9 @@ export default class Logger {
           };
           if (conf.metaColor) {
             itemTag.color = conf.color ? color : 'gray';
-            if (isPlainObject(conf.metaColor)) {
-              itemTag.color = conf.metaColor[key] || 'gray';
+            if (typeof conf.metaColor === 'object') {
+              const strMetaColor = conf.metaColor[key];
+              itemTag.color = strMetaColor || 'gray';
             }
           }
           if (strTag) {
@@ -244,7 +247,7 @@ export default class Logger {
     }
 
     if (conf.timeStamp) {
-      const time = formatTime(msg.time, {
+      const time = formatTime(Number(msg.time), {
         template: conf.timeTemplate,
       });
       args.unshift({
@@ -267,8 +270,8 @@ export default class Logger {
     }
   }
 
-  public parseArgs(args: PlainType[]): PlainType[] {
-    const arr: PlainType[] = [];
+  public parseArgs(args: PlainObject[]): unknown[] {
+    const arr: unknown[] = [];
     args.forEach((item) => {
       arr.push(item.content);
     });

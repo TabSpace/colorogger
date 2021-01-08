@@ -1,7 +1,18 @@
-declare type PlainType = undefined | null | number | string | boolean | RegExp | Date | PlainObject;
-
 interface PlainObject {
-  [key: string]: PlainType | PlainType[];
+  [key?: string]: unknown;
+}
+
+declare type SimpleValue = null | undefined | string | number;
+
+interface SimpleObject {
+  [key?: string]: SimpleValue;
+}
+
+interface IconOptions {
+  [key?: string]: {
+    icon?: string;
+    color?: string;
+  };
 }
 
 declare type ThemeProp = 'colors' | 'icons';
@@ -15,16 +26,26 @@ interface OutputOptions {
 interface LoggerOptions {
   color?: boolean;
   timeStamp?: boolean;
-  meta?: PlainObject;
-  metaColor?: PlainType;
-  timeTemplate?: string;
   print?: boolean;
+  metaColor?: boolean | SimpleObject;
+  meta?: SimpleObject;
+  timeTemplate?: string;
   wrapIcon?: (icon: string) => string;
   wrapTag?: (tag: string, key?: string) => string;
   transport?: (...args: PlainType[]) => void;
 }
 
 interface ThemeOptions {
-  colors?: PlainObject;
-  icons?: PlainObject;
+  colors?: SimpleObject;
+  icons?: IconOptions;
+}
+
+interface Message {
+  content?: unknown[];
+  level?: string;
+  flag?: string;
+  grade?: number;
+  time?: number;
+  __content?: unknown[];
+  [key: string]: unknown;
 }

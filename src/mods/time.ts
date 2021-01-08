@@ -124,6 +124,6 @@ export function formatTime(time: Date | number, spec: DateFormatOptions): string
   data.mss = fixTo(data.milliSeconds, 3);
   data.ms = String(data.milliSeconds);
 
-  output = substitute(conf.template, data);
+  output = substitute(conf.template, data as PlainObject);
   return output;
 }

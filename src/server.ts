@@ -2,7 +2,7 @@ import chalk, { Chalk } from 'chalk';
 import Logger from './mods/logger';
 import { strTypes } from './mods/constants';
 
-function setColor(msg: PlainType, color: string) {
+function setColor(msg: unknown, color: string): string {
   let str = msg;
   if (strTypes.indexOf(typeof str) >= 0) {
     str = String(str);
@@ -18,7 +18,8 @@ function setColor(msg: PlainType, color: string) {
       }
     }
   }
-  return str;
+  const rs = String(str);
+  return rs;
 }
 
 class ServerLogger extends Logger {
@@ -26,10 +27,10 @@ class ServerLogger extends Logger {
     super(options);
   }
 
-  public parseArgs(args: PlainType[]): PlainType[] {
-    const arr: PlainType[] = [];
+  public parseArgs(args: PlainObject[]): unknown[] {
+    const arr: unknown[] = [];
     args.forEach((item) => {
-      const content = setColor(item.content, item.color);
+      const content = setColor(item.content, String(item.color));
       arr.push(content);
     });
     return arr;

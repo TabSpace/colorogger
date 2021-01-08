@@ -9,11 +9,11 @@ class ClientLogger extends Logger {
     super(options);
   }
 
-  public parseArgs(args: PlainType[]): PlainType[] {
-    let arr: PlainType[] = [];
-    const strings: string[] = [];
-    const colors: string[] = [];
-    const extras: PlainType[] = [];
+  public parseArgs(args: PlainObject[]): unknown[] {
+    let arr: unknown[] = [];
+    const strings: unknown[] = [];
+    const colors: unknown[] = [];
+    const extras: unknown[] = [];
     let breaked = false;
     args.forEach((item) => {
       if (!breaked) {

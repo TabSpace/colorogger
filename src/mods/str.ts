@@ -14,7 +14,8 @@ export function substitute(str: string, obj: PlainObject, reg?: RegExp): string 
     if (match.charAt(0) === '\\') {
       return match.slice(1);
     }
-    return obj[name] !== null && obj[name] !== undefined ? obj[name] : '';
+    const rs = obj[name] !== null && obj[name] !== undefined ? obj[name] : '';
+    return String(rs);
   });
 }
 

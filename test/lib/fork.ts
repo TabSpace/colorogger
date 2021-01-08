@@ -2,7 +2,7 @@ import $assert from 'power-assert';
 import { Factory } from './types';
 
 export default function forkTest(Logger: Factory) {
-  let msg: PlainType = null;
+  let msg: Message = null;
   const logger = new Logger({
     transport: (message) => {
       msg = message;
