@@ -1,6 +1,7 @@
 import chalk, { Chalk } from 'chalk';
 import Logger from './mods/logger';
 import { strTypes } from './mods/constants';
+import { LoggerOptions, PlainObject } from './types';
 
 function setColor(msg: unknown, color: string): string {
   let str = msg;

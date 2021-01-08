@@ -1,5 +1,6 @@
 import $assert from 'power-assert';
 import { Factory } from './types';
+import { Message } from '../../src/types';
 
 export default function forkTest(Logger: Factory) {
   let msg: Message = null;

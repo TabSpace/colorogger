@@ -1,4 +1,4 @@
-const $logger = require('../lib/server');
+const $logger = require('../lib/server').default;
 
 const logger = new $logger();
 

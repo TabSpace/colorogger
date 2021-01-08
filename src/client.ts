@@ -1,5 +1,6 @@
 import Logger from './mods/logger';
 import { strTypes } from './mods/constants';
+import { LoggerOptions, PlainObject } from './types';
 
 // run at browser
 // @see http://voidcanvas.com/make-console-log-output-colorful-and-stylish-in-browser-node/

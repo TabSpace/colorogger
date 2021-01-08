@@ -3,14 +3,23 @@
     "target": "es5",
     "sourceMap": true,
     "module": "commonjs",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "noImplicitAny": true,
     "noImplicitThis": false,
-    "declaration": true
+    "allowJs": true,
+    "declaration": true,
+    "rootDir": "./src",
+    "outDir": "./lib",
+    "watch": false
   },
+  "include": [
+    "src"
+  ],
   "exclude": [
     "lib",
+    "test",
     "node_modules"
   ]
 }

@@ -1,3 +1,5 @@
+import { PlainObject } from '../types';
+
 /**
  * 简单模板函数
  * @method substitute

@@ -1,6 +1,7 @@
 import $assert from 'power-assert';
 import $lodash from 'lodash';
 import { Factory } from './types';
+import { Message } from '../../src/types';
 
 export default function logTest(Logger: Factory, mode: string) {
   let msg: Message = null;

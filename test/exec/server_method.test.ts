@@ -1,5 +1,6 @@
 import $assert from 'power-assert';
 import $logger from '../../src/server';
+import { Message } from '../../src/types';
 
 const ci = process.env.CI;
 

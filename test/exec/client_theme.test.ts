@@ -1,6 +1,7 @@
 import $assert from 'power-assert';
 import $lodash from 'lodash';
 import $logger from '../../src/client';
+import { Message } from '../../src/types';
 
 let msg: Message = null;
 

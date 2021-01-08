@@ -5,7 +5,9 @@
   "main": "lib/server.js",
   "scripts": {
     "prepublishOnly": "npm run build",
-    "build": "rollup -c rollup.config.js",
+    "build": "npm run compile && npm run rollup",
+    "rollup": "rollup -c rollup.config.js",
+    "compile": "tsc",
     "test": "jest --coverage ./test/exec",
     "fmt": "prettier --config ./.prettierrc.js --write ./src",
     "lint": "eslint ./src --fix",
@@ -77,29 +79,10 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "jest": {
-    "verbose": true,
-    "preset": "ts-jest",
-    "testEnvironment": "node",
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
-  },
   "files": [
     "lib",
-    "src",
-    "index.d.ts"
+    "src"
   ],
-  "types": "index.d.ts",
   "author": "pillar0514@163.com",
   "license": "MIT",
   "dependencies": {

@@ -1,29 +1,29 @@
-interface PlainObject {
-  [key?: string]: unknown;
+export interface PlainObject {
+  [key: string]: unknown;
 }
 
-declare type SimpleValue = null | undefined | string | number | boolean;
+export declare type SimpleValue = null | undefined | string | number | boolean;
 
-interface SimpleObject {
-  [key?: string]: SimpleValue;
+export interface SimpleObject {
+  [key: string]: SimpleValue;
 }
 
-interface IconOptions {
-  [key?: string]: {
+export interface IconOptions {
+  [key: string]: {
     icon?: string;
     color?: string;
   };
 }
 
-declare type ThemeProp = 'colors' | 'icons';
+export declare type ThemeProp = 'colors' | 'icons';
 
-interface OutputOptions {
+export interface OutputOptions {
   level?: string;
   flag?: string;
   color?: string;
 }
 
-interface LoggerOptions {
+export interface LoggerOptions {
   color?: boolean;
   timeStamp?: boolean;
   print?: boolean;
@@ -32,15 +32,15 @@ interface LoggerOptions {
   timeTemplate?: string;
   wrapIcon?: (icon: string) => string;
   wrapTag?: (tag: string, key?: string) => string;
-  transport?: (...args: PlainType[]) => void;
+  transport?: (msg: Message) => void;
 }
 
-interface ThemeOptions {
+export interface ThemeOptions {
   colors?: SimpleObject;
   icons?: IconOptions;
 }
 
-interface Message {
+export interface Message {
   content?: unknown[];
   level?: string;
   flag?: string;

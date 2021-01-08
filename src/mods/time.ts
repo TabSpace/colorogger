@@ -1,5 +1,6 @@
 import { fixTo } from './num';
 import { substitute } from './str';
+import { PlainObject } from '../types';
 
 /**
  * 日期对象格式化输出
