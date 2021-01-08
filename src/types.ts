@@ -28,7 +28,7 @@ export interface LoggerOptions {
   timeStamp?: boolean;
   print?: boolean;
   metaColor?: boolean | SimpleObject;
-  meta?: SimpleObject;
+  meta?: PlainObject;
   timeTemplate?: string;
   wrapIcon?: (icon: string) => string;
   wrapTag?: (tag: string, key?: string) => string;
