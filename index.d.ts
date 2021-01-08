@@ -2,7 +2,7 @@ interface PlainObject {
   [key?: string]: unknown;
 }
 
-declare type SimpleValue = null | undefined | string | number;
+declare type SimpleValue = null | undefined | string | number | boolean;
 
 interface SimpleObject {
   [key?: string]: SimpleValue;
