@@ -12,6 +12,17 @@ export default function logTest(Logger: Factory, mode: string) {
     },
   });
 
+  const exampleObject = {
+    a: 1,
+    b: {
+      c: 1,
+      d: {
+        e: 1,
+        f: 2,
+      },
+    },
+  };
+
   logger.method('special', {
     level: 'special',
     color: '#ff9901',
@@ -19,7 +30,7 @@ export default function logTest(Logger: Factory, mode: string) {
 
   describe('logger.log', () => {
     beforeAll(() => {
-      logger.log('log content', { a: 1 });
+      logger.log('log content', exampleObject);
     });
 
     test('msg.content[0] is string', () => {
@@ -31,6 +42,11 @@ export default function logTest(Logger: Factory, mode: string) {
       $assert(Array.isArray(msg.content));
       $assert.equal(typeof msg.content[1], 'object');
       $assert.equal($lodash.get(msg, 'content[1].a'), 1);
+    });
+
+    test('msg.__content[3] is object', () => {
+      $assert(Array.isArray(msg.__content));
+      $assert.equal(typeof msg.__content[msg.__content.length - 1], 'object');
     });
 
     test('msg.time', () => {
@@ -61,6 +77,7 @@ export default function logTest(Logger: Factory, mode: string) {
       $assert.equal(typeof msg.content[2], 'object');
       $assert.equal($lodash.get(msg, 'content[2].a'), 1);
       if (mode === 'client') {
+        $assert(Array.isArray(msg.__content));
         $assert.equal(typeof msg.__content[msg.__content.length - 1], 'object');
         $assert.equal(typeof msg.__content[msg.__content.length - 2], 'object');
       }
