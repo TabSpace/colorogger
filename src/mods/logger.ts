@@ -192,11 +192,6 @@ export default abstract class Logger {
     const icon = icons[String(spec.flag)] || icons[level];
     const color = spec.color || colors[flag] || colors[level];
 
-    let method = String(level) as keyof Console;
-    if (typeof console[method] !== 'function') {
-      method = 'log';
-    }
-
     let args = [];
     args = para.slice(0);
     args = args.map((item) => {
@@ -264,10 +259,7 @@ export default abstract class Logger {
       this.transport(msg);
     }
     if (conf.print) {
-      if (method === 'debug') {
-        method = 'log';
-      }
-      console[method](...contentArgs);
+      console.log(...contentArgs);
     }
   }
 
