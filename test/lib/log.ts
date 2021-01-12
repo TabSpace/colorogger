@@ -2,10 +2,16 @@ import $assert from 'power-assert';
 import $lodash from 'lodash';
 import { Factory } from './types';
 import { Message } from '../../src/types';
+import Logger from '../../src/mods/logger';
+
+interface CustomLogger extends Logger {
+  special?: (...args: unknown[]) => void;
+}
 
 export default function logTest(Logger: Factory, mode: string) {
   let msg: Message = null;
-  const logger = new Logger({
+
+  const logger: CustomLogger = new Logger({
     transport: (message) => {
       msg = message;
       console.log(msg);
@@ -117,9 +123,7 @@ export default function logTest(Logger: Factory, mode: string) {
 
   describe('logger.special', () => {
     beforeAll(() => {
-      if (typeof logger.special === 'function') {
-        logger.special(false);
-      }
+      logger.special(false);
     });
 
     test('msg.content', () => {

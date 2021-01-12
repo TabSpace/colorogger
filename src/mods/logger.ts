@@ -62,7 +62,7 @@ const defaultIcons = {
   },
 };
 
-export default class Logger {
+export default abstract class Logger {
   public conf: LoggerOptions;
   public meta: PlainObject;
   public levels: PlainObject;
@@ -271,11 +271,5 @@ export default class Logger {
     }
   }
 
-  public parseArgs(args: PlainObject[]): unknown[] {
-    const arr: unknown[] = [];
-    args.forEach((item) => {
-      arr.push(item.content);
-    });
-    return arr;
-  }
+  public abstract parseArgs(args: PlainObject[]): unknown[];
 }

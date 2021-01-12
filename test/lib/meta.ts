@@ -28,12 +28,6 @@ export default function metaTest(Logger: Factory, mode: string) {
     },
   });
 
-  const fork3 = fork2.fork({
-    meta: {
-      tag: 'tag3',
-    },
-  });
-
   describe('fork1 meta', () => {
     beforeAll(() => {
       fork1.log('fork1');
@@ -68,6 +62,11 @@ export default function metaTest(Logger: Factory, mode: string) {
 
   describe('fork3 meta', () => {
     beforeAll(() => {
+      const fork3 = fork2.fork({
+        meta: {
+          tag: 'tag3',
+        },
+      });
       fork3.log('fork3');
     });
 
@@ -130,6 +129,39 @@ export default function metaTest(Logger: Factory, mode: string) {
       test('msg.tag wrap', () => {
         $assert(String(msg.__content[0]).indexOf('(tagw-value)') > 0);
         $assert(String(msg.__content[0]).indexOf('tagv-value') < 0);
+      });
+    }
+  });
+
+  describe('fork5 meta', () => {
+    beforeAll(() => {
+      const fork5 = fork1.fork({
+        meta: {
+          tag: 'tag5',
+        },
+        metaColor: {
+          tag: 'blue',
+        },
+      });
+      fork5.log('fork5');
+    });
+
+    test('msg.content', () => {
+      $assert.equal(msg.content[0], 'fork5');
+    });
+    test('msg.url', () => {
+      $assert.equal(msg.url, '/url');
+    });
+    test('msg.guid', () => {
+      $assert.equal(msg.guid, 'f1_guid');
+    });
+    if (mode === 'server') {
+      test('msg.tag5 color', () => {
+        $assert($lodash.get(msg, '__content[4]') === '\u001b[34m[tag5]\u001b[39m');
+      });
+    } else {
+      test('msg.tag5 color', () => {
+        $assert($lodash.get(msg, '__content[5]') === 'color: blue;');
       });
     }
   });
