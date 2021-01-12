@@ -1,5 +1,6 @@
 import $assert from 'power-assert';
 import $lodash from 'lodash';
+import $chalk from 'chalk';
 import { Factory } from './types';
 import { Message } from '../../src/types';
 
@@ -156,7 +157,7 @@ export default function metaTest(Logger: Factory, mode: string) {
     });
     if (mode === 'server') {
       test('msg.tag5 color', () => {
-        $assert($lodash.get(msg, '__content[4]') === '\u001b[34m[tag5]\u001b[39m');
+        $assert($lodash.get(msg, '__content[4]') === $chalk.blue('[tag5]'));
       });
     } else {
       test('msg.tag5 color', () => {

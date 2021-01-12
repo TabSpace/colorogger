@@ -62,6 +62,8 @@ const defaultIcons = {
   },
 };
 
+export declare type LogMethod = (...args: unknown[]) => void;
+
 export default abstract class Logger {
   public conf: LoggerOptions;
   public meta: PlainObject;
@@ -69,16 +71,16 @@ export default abstract class Logger {
   public colors: PlainObject;
   public icons: IconOptions;
   public transport: (msg: Message) => void;
-  public log: (...args: unknown[]) => void;
-  public info: (...args: unknown[]) => void;
-  public debug: (...args: unknown[]) => void;
-  public warn: (...args: unknown[]) => void;
-  public error: (...args: unknown[]) => void;
-  public success: (...args: unknown[]) => void;
-  public fail: (...args: unknown[]) => void;
-  public tip: (...args: unknown[]) => void;
-  public stress: (...args: unknown[]) => void;
-  [key: string]: ((...args: unknown[]) => void) | unknown;
+  public log: LogMethod;
+  public info: LogMethod;
+  public debug: LogMethod;
+  public warn: LogMethod;
+  public error: LogMethod;
+  public success: LogMethod;
+  public fail: LogMethod;
+  public tip: LogMethod;
+  public stress: LogMethod;
+  [key: string]: LogMethod | unknown;
 
   public constructor(options?: LoggerOptions) {
     this.conf = {};
