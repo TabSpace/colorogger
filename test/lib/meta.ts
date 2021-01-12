@@ -12,7 +12,6 @@ export default function metaTest(Logger: Factory, mode: string) {
     },
     transport: (message) => {
       msg = message;
-      console.log(msg);
     },
   });
 

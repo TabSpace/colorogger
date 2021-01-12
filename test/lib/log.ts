@@ -14,7 +14,6 @@ export default function logTest(Logger: Factory, mode: string) {
   const logger: CustomLogger = new Logger({
     transport: (message) => {
       msg = message;
-      console.log(msg);
     },
   });
 
