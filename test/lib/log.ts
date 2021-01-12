@@ -19,12 +19,18 @@ export default function logTest(Logger: Factory, mode: string) {
 
   describe('logger.log', () => {
     beforeAll(() => {
-      logger.log('log content');
+      logger.log('log content', { a: 1 });
     });
 
-    test('msg.content', () => {
+    test('msg.content[0] is string', () => {
       $assert(Array.isArray(msg.content));
       $assert.equal(msg.content[0], 'log content');
+    });
+
+    test('msg.content[1] is object', () => {
+      $assert(Array.isArray(msg.content));
+      $assert.equal(typeof msg.content[1], 'object');
+      $assert.equal($lodash.get(msg, 'content[1].a'), 1);
     });
 
     test('msg.time', () => {

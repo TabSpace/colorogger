@@ -3,7 +3,7 @@ import Logger from './mods/logger';
 import { strTypes } from './mods/constants';
 import { LoggerOptions, PlainObject } from './types';
 
-function setColor(msg: unknown, color: string): string {
+function setColor(msg: unknown, color: string): unknown {
   let str = msg;
   if (strTypes.indexOf(typeof str) >= 0) {
     str = String(str);
@@ -19,8 +19,7 @@ function setColor(msg: unknown, color: string): string {
       }
     }
   }
-  const rs = String(str);
-  return rs;
+  return str;
 }
 
 class ServerLogger extends Logger {
