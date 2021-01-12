@@ -259,7 +259,8 @@ export default abstract class Logger {
       this.transport(msg);
     }
     if (conf.print) {
-      console.log(...contentArgs);
+      const method = 'log';
+      console[method](...contentArgs);
     }
   }
 
