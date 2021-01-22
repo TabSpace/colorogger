@@ -198,7 +198,7 @@ export default abstract class Logger {
     args = para.slice(0);
     args = args.map((item) => {
       let itemColor = '';
-      if (conf.color && color) {
+      if (color) {
         itemColor = String(color);
       }
       return {
@@ -218,7 +218,7 @@ export default abstract class Logger {
             content: strTag,
           };
           if (conf.metaColor) {
-            itemTag.color = conf.color ? color : 'gray';
+            itemTag.color = color || 'gray';
             if (typeof conf.metaColor === 'object') {
               const strMetaColor = conf.metaColor[key];
               itemTag.color = strMetaColor || 'gray';
@@ -238,7 +238,7 @@ export default abstract class Logger {
       }
       const iconColor = icon.color || '';
       const itemIcon = {
-        color: conf.color ? iconColor : '',
+        color: iconColor || '',
         content: tagLevel,
       };
       args.unshift(itemIcon);
