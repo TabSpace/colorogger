@@ -55,7 +55,6 @@
   },
   "lint-staged": {
     "*.ts": [
-      "prettier --write --ignore-unknown",
       "eslint --fix",
       "git add"
     ]

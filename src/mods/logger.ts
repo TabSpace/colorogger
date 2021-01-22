@@ -1,7 +1,15 @@
 import cloneDeep from 'lodash/cloneDeep';
 import isPlainObject from 'lodash/isPlainObject';
 import { formatTime } from './time';
-import { LoggerOptions, PlainObject, IconOptions, Message, ThemeOptions, ThemeProp, OutputOptions } from '../types';
+import {
+  LoggerOptions,
+  PlainObject,
+  IconOptions,
+  Message,
+  ThemeOptions,
+  ThemeProp,
+  OutputOptions,
+} from '../types';
 
 const defaultLevels = {
   debug: 0,
