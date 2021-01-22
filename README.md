@@ -72,6 +72,13 @@ Enable time stamp.
 - type: `Boolean`
 - default: `true`
 
+### stringify
+
+Make log stringify and remove breaks.
+
+- type: `Boolean`
+- default: `false`
+
 ### print
 
 Enable logger print log to console.
