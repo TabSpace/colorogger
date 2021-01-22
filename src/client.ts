@@ -11,17 +11,12 @@ class ClientLogger extends Logger {
   }
 
   public parseArgs(args: PlainObject[]): unknown[] {
-    const { conf } = this;
     let arr: unknown[] = [];
     const strings: unknown[] = [];
     const colors: unknown[] = [];
     const extras: unknown[] = [];
     let breaked = false;
     args.forEach((item) => {
-      if (!conf.color) {
-        extras.push(item.content);
-        return;
-      }
       if (!breaked) {
         if (strTypes.indexOf(typeof item.content) >= 0) {
           item.content = String(item.content);

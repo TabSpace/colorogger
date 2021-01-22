@@ -132,6 +132,7 @@ export default abstract class Logger {
       timeStamp: true,
       print: true,
       metaColor: false,
+      stringify: false,
       meta: {},
       timeTemplate: '{{YYYY}}/{{MM}}/{{DD}} {{hh}}:{{mm}}:{{ss}}.{{mss}}',
       wrapIcon: (icon: string) => `[${icon}]`,
@@ -262,7 +263,28 @@ export default abstract class Logger {
       });
     }
 
-    const contentArgs = this.parseArgs(args);
+    let contentArgs = [];
+
+    if (conf.color) {
+      contentArgs = this.parseArgs(args);
+    } else {
+      contentArgs = args.map(item => item.content);
+    }
+
+    if (conf.stringify) {
+      contentArgs = contentArgs.map((item) => {
+        const type = typeof item;
+        let str = '';
+        if (type === 'boolean' || type === 'number' || type === 'string') {
+          str = String(item);
+        } else {
+          str = String(JSON.stringify(item));
+        }
+        str = str.replace(/[\r\n]/g, ' ');
+        return str;
+      });
+    }
+
     msg.__content = contentArgs;
 
     if (typeof this.transport === 'function') {

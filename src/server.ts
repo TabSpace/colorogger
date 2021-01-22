@@ -28,13 +28,9 @@ class ServerLogger extends Logger {
   }
 
   public parseArgs(args: PlainObject[]): unknown[] {
-    const { conf } = this;
     const arr: unknown[] = [];
     args.forEach((item) => {
-      let content = item.content;
-      if (conf.color) {
-        content = setColor(item.content, String(item.color));
-      }
+      const content = setColor(item.content, String(item.color));
       arr.push(content);
     });
     return arr;

@@ -8,8 +8,10 @@ export default function forkTest(Logger: Factory, mode: string) {
   let msg: Message = null;
   const logger = new Logger({
     color: false,
+    stringify: true,
     transport: (message) => {
       msg = message;
+      // console.log(msg);
     },
   });
 
@@ -19,21 +21,17 @@ export default function forkTest(Logger: Factory, mode: string) {
       fork1 = logger.fork();
     });
 
-    logger.warn('color-warn');
+    test('logger color is disabled', () => {
+      logger.warn('color-warn');
 
-    test('logger content color is disabled', () => {
-      const content = $lodash.get(msg, '__content[2]');
-      $assert.equal(content, 'color-warn');
-    });
-
-    test('logger icon color is disabled', () => {
-      const icon = $lodash.get(msg, '__content[1]');
-      $assert.equal(icon, '[!]');
-    });
-
-    test('logger time color is disabled', () => {
       const time = $lodash.get(msg, '__content[0]', '') as string;
       $assert.equal(time.substr(0, 4), new Date().getFullYear());
+
+      const icon = $lodash.get(msg, '__content[1]');
+      $assert.equal(icon, '[!]');
+
+      const content = $lodash.get(msg, '__content[2]');
+      $assert.equal(content, 'color-warn');
     });
 
     test('fork1 content is enabled', () => {
@@ -45,6 +43,18 @@ export default function forkTest(Logger: Factory, mode: string) {
         const content = $lodash.get(msg, '__content[3]');
         $assert.equal(content, 'color: red;');
       }
+    });
+
+    test('logger content is stringified', () => {
+      const unde = void 0;
+      logger.info(1, true, null, unde, 'l1\nl2', { a: 1 });
+
+      $assert($lodash.get(msg, '__content[2]') === '1');
+      $assert($lodash.get(msg, '__content[3]') === 'true');
+      $assert($lodash.get(msg, '__content[4]') === 'null');
+      $assert($lodash.get(msg, '__content[5]') === 'undefined');
+      $assert($lodash.get(msg, '__content[6]') === 'l1 l2');
+      $assert($lodash.get(msg, '__content[7]') === '{"a":1}');
     });
   });
 }
