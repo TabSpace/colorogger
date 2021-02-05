@@ -34,7 +34,7 @@ npm i colorogger
 ### server
 
 ```js
-const colorogger = require('colorogger').default;
+const colorogger = require('colorogger');
 const logger = new colorogger();
 
 logger.log('log');
