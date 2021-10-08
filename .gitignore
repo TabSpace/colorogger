@@ -1,6 +1,7 @@
 /lib
 /dist
 /ignore
+package-lock.json
 
 # Logs
 logs
