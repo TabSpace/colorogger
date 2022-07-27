@@ -1,4 +1,3 @@
-import cloneDeep from 'lodash/cloneDeep';
 import isPlainObject from 'lodash/isPlainObject';
 import { formatTime } from './time';
 import {
@@ -69,6 +68,10 @@ const defaultIcons = {
     color: 'magenta',
   },
 };
+
+function cloneDeep(obj: PlainObject) {
+  return JSON.parse(JSON.stringify(obj));
+}
 
 export declare type LogMethod = (...args: unknown[]) => void;
 
@@ -155,7 +158,7 @@ export default abstract class Logger {
     Object.keys(this).forEach((key: string) => {
       const prop = this[key];
       if (isPlainObject(prop)) {
-        clone[key] = cloneDeep(prop);
+        clone[key] = cloneDeep(prop as PlainObject);
       } else {
         clone[key] = prop;
       }
