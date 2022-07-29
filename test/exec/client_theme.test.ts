@@ -1,9 +1,9 @@
 import $assert from 'power-assert';
-import $lodash from 'lodash';
+import $get from 'lodash/get';
 import $logger from '../../src/client';
 import { Message } from '../../src/types';
 
-let msg: Message = null;
+let msg: Message;
 
 const logger = new $logger({
   transport: (message) => {
@@ -34,14 +34,14 @@ describe('info theme', () => {
   });
 
   test('info msg.content', () => {
-    $assert.equal(msg.content[0], 'info');
+    $assert.equal(msg?.content?.[0], 'info');
   });
   test('info icon', () => {
-    $assert(String(msg.__content[0]).indexOf('%c [i]') > 0);
-    $assert.equal(msg.__content[2], 'color: ;');
+    $assert(String($get(msg, '__content[0]')).indexOf('%c [i]') > 0);
+    $assert.equal($get(msg, '__content[2]'), 'color: ;');
   });
   test('info color', () => {
-    $assert.equal(msg.__content[3], 'color: yellow;');
+    $assert.equal($get(msg, '__content[3]'), 'color: yellow;');
   });
 });
 
@@ -51,16 +51,16 @@ describe('debug theme', () => {
   });
 
   test('debug msg.content', () => {
-    $assert.equal(msg.content[0], 'debug');
+    $assert.equal(msg?.content?.[0], 'debug');
   });
   test('debug icon', () => {
-    $assert(String(msg.__content[0]).indexOf('%c [d]') > 0);
-    $assert.equal(msg.__content[2], 'color: #ff9501;');
+    $assert(String($get(msg, '__content[0]')).indexOf('%c [d]') > 0);
+    $assert.equal($get(msg, '__content[2]'), 'color: #ff9501;');
   });
   test('debug color', () => {
-    $assert.equal(msg.__content[3], 'color: #ff9501;');
+    $assert.equal($get(msg, '__content[3]'), 'color: #ff9501;');
   });
   test('debug extra', () => {
-    $assert.equal($lodash.get(msg, '__content[4].a'), 1);
+    $assert.equal($get(msg, '__content[4].a'), 1);
   });
 });

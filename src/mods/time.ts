@@ -37,12 +37,12 @@ import { PlainObject } from '../types';
  * @param {String} [spec.template='{{YYYY}}-{{MM}}-{{DD}} {{hh}}:{{mm}}'] 格式化模板
  * @return {String} 格式化完成的字符串
  * @example
- * 	console.info(
- * 		format(new Date(),{
- * 			template : '{{YYYY}}年{{MM}}月{{DD}}日 周{{d}} {{hh}}时{{mm}}分{{ss}}秒'
- * 		})
- * 	);
- * 	// 2015年09月09日 周三 14时19分42秒
+ * console.info(
+ *   format(new Date(),{
+ *     template : '{{YYYY}}年{{MM}}月{{DD}}日 周{{d}} {{hh}}时{{mm}}分{{ss}}秒'
+ *   })
+ * );
+ * // 2015年09月09日 周三 14时19分42秒
  */
 
 function rLimit(num: number, width: number): string {

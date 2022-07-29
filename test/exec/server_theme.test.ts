@@ -1,10 +1,12 @@
 import $assert from 'power-assert';
+import $get from 'lodash/get';
+
 import $logger from '../../src/server';
 import { Message } from '../../src/types';
 
 const ci = process.env.CI;
 
-let msg: Message = null;
+let msg: Message;
 
 const logger = new $logger({
   transport: (message) => {
@@ -35,14 +37,14 @@ describe('info theme', () => {
   });
 
   test('info msg.content', () => {
-    $assert.equal(msg.content[0], 'info');
+    $assert.equal($get(msg, 'content[0]'), 'info');
   });
   test('info icon', () => {
-    $assert.equal(msg.__content[1], '[i]');
+    $assert.equal($get(msg, '__content[1]'), '[i]');
   });
   if (!ci) {
     test('info color', () => {
-      $assert.equal(msg.__content[2], '\u001b[33minfo\u001b[39m');
+      $assert.equal($get(msg, '__content[2]'), '\u001b[33minfo\u001b[39m');
     });
   }
 });
@@ -53,14 +55,14 @@ describe('debug theme', () => {
   });
 
   test('debug msg.content', () => {
-    $assert.equal(msg.content[0], 'debug');
+    $assert.equal($get(msg, 'content[0]'), 'debug');
   });
   if (!ci) {
     test('debug icon', () => {
-      $assert.equal(msg.__content[1], '\u001b[38;2;255;149;1m[d]\u001b[39m');
+      $assert.equal($get(msg, '__content[1]'), '\u001b[38;2;255;149;1m[d]\u001b[39m');
     });
     test('debug color', () => {
-      $assert.equal(msg.__content[2], '\u001b[38;2;255;149;1mdebug\u001b[39m');
+      $assert.equal($get(msg, '__content[2]'), '\u001b[38;2;255;149;1mdebug\u001b[39m');
     });
   }
 });

@@ -1,8 +1,9 @@
 import $assert from 'power-assert';
+import $get from 'lodash/get';
 import $logger from '../../src/client';
 import { Message } from '../../src/types';
 
-let msg: Message = null;
+let msg: Message;
 
 const logger = new $logger({
   transport: (message) => {
@@ -35,13 +36,13 @@ describe('temp method', () => {
   });
 
   test('temp msg.content', () => {
-    $assert.equal(msg.content[0], 't1');
+    $assert.equal($get(msg, 'content[0]'), 't1');
   });
   test('temp icon', () => {
-    $assert.equal(msg.__content[2], 'color: ;');
+    $assert.equal($get(msg, '__content[2]'), 'color: ;');
   });
   test('temp color', () => {
-    $assert.equal(msg.__content[3], 'color: ;');
+    $assert.equal($get(msg, '__content[3]'), 'color: ;');
   });
 });
 
@@ -53,12 +54,12 @@ describe('custom method', () => {
   });
 
   test('custom msg.content', () => {
-    $assert.equal(msg.content[0], 'c1');
+    $assert.equal($get(msg, 'content[0]'), 'c1');
   });
   test('custom icon', () => {
-    $assert.equal(msg.__content[2], 'color: #ff9501;');
+    $assert.equal($get(msg, '__content[2]'), 'color: #ff9501;');
   });
   test('custom color', () => {
-    $assert.equal(msg.__content[3], 'color: #ff9501;');
+    $assert.equal($get(msg, '__content[3]'), 'color: #ff9501;');
   });
 });

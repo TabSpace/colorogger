@@ -77,20 +77,35 @@ export declare type LogMethod = (...args: unknown[]) => void;
 
 export default abstract class Logger {
   public conf: LoggerOptions;
+
   public meta: PlainObject;
+
   public levels: PlainObject;
+
   public colors: PlainObject;
+
   public icons: IconOptions;
+
   public transport: (msg: Message) => void;
+
   public log: LogMethod;
+
   public info: LogMethod;
+
   public debug: LogMethod;
+
   public warn: LogMethod;
+
   public error: LogMethod;
+
   public success: LogMethod;
+
   public fail: LogMethod;
+
   public tip: LogMethod;
+
   public stress: LogMethod;
+
   [key: string]: LogMethod | unknown;
 
   public constructor(options?: LoggerOptions) {
@@ -169,6 +184,7 @@ export default abstract class Logger {
 
   // add custom method
   public method(name: string, options?: OutputOptions): void {
+    // eslint-disable-next-line func-names
     this[name] = function (...para: string[]) {
       const opts = { ...options };
       this.output(opts, para);
@@ -189,7 +205,9 @@ export default abstract class Logger {
       color: '',
       ...options,
     };
-    const { conf, meta, levels, colors, icons } = this;
+    const {
+      conf, meta, levels, colors, icons,
+    } = this;
 
     const msg: Message = {};
     Object.assign(msg, meta);
@@ -271,7 +289,7 @@ export default abstract class Logger {
     if (conf.color) {
       contentArgs = this.parseArgs(args);
     } else {
-      contentArgs = args.map(item => item.content);
+      contentArgs = args.map((item) => item.content);
     }
 
     if (conf.stringify) {
@@ -288,13 +306,15 @@ export default abstract class Logger {
       });
     }
 
-    msg.__content = contentArgs;
+    const cprop = '__content';
+    msg[cprop] = contentArgs;
 
     if (typeof this.transport === 'function') {
       this.transport(msg);
     }
     if (conf.print) {
       const method = 'log';
+      // eslint-disable-next-line no-console
       console[method](...contentArgs);
     }
   }

@@ -1,4 +1,4 @@
-import commonjs from '@rollup/plugin-commonjs'
+import commonjs from '@rollup/plugin-commonjs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 const conf = [];
@@ -13,7 +13,7 @@ conf.push({
   plugins: [
     nodeResolve(),
     commonjs(),
-  ]
+  ],
 });
 
 export default conf;

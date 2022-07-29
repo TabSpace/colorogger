@@ -16,7 +16,8 @@ class ClientLogger extends Logger {
     const colors: unknown[] = [];
     const extras: unknown[] = [];
     let breaked = false;
-    args.forEach((item) => {
+    args.forEach((arg) => {
+      const item = arg;
       if (!breaked) {
         if (strTypes.indexOf(typeof item.content) >= 0) {
           item.content = String(item.content);
