@@ -46,6 +46,7 @@
     "husky": "^4.2.5",
     "jest": "^26.4.2",
     "lint-staged": "^10.2.11",
+    "lodash": "^4.17.21",
     "power-assert": "^1.6.1",
     "prettier": "^2.1.1",
     "rollup": "^2.26.6",
@@ -83,7 +84,6 @@
   "author": "pillar0514@163.com",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^4.1.0",
-    "lodash": "^4.17.20"
+    "chalk": "^4.1.0"
   }
 }
