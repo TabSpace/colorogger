@@ -15,8 +15,7 @@
     "example:server": "node ./example/server.js",
     "example:client": "http-server ./",
     "semantic-release": "semantic-release",
-    "lint": "eslint ./ --fix",
-    "cz": "git add . && git cz"
+    "lint": "eslint ./ --fix"
   },
   "repository": {
     "type": "git",
