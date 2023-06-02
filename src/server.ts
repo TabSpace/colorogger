@@ -1,11 +1,11 @@
 import chalk, { Chalk } from 'chalk';
 import Logger from './mods/logger';
-import { strTypes } from './mods/constants';
+import { STRING_AS_TYPES } from './mods/constants';
 import { LoggerOptions, PlainObject } from './types';
 
 function setColor(msg: unknown, color: string): unknown {
   let str = msg;
-  if (strTypes.indexOf(typeof str) >= 0) {
+  if (STRING_AS_TYPES.indexOf(typeof str) >= 0) {
     str = String(str);
   }
   if (color && typeof str === 'string') {

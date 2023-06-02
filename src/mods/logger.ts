@@ -9,65 +9,11 @@ import {
   ThemeProp,
   OutputOptions,
 } from '../types';
-
-const defaultLevels = {
-  debug: 0,
-  log: 1,
-  info: 2,
-  warn: 3,
-  error: 4,
-};
-
-const defaultColors = {
-  log: '',
-  info: '',
-  debug: '',
-  error: 'red',
-  warn: '#ffd700',
-  success: '#04be02',
-  fail: '#ff6347',
-  tip: '#6495ed',
-  stress: '#f4a0ab',
-};
-
-const defaultIcons = {
-  log: {
-    icon: '.',
-    color: '',
-  },
-  info: {
-    icon: '*',
-    color: '#1e90ff',
-  },
-  debug: {
-    icon: '#',
-    color: 'magenta',
-  },
-  warn: {
-    icon: '!',
-    color: '#ffd700',
-  },
-  error: {
-    icon: 'x',
-    color: 'red',
-  },
-  success: {
-    icon: '✓',
-    color: '#04be02',
-  },
-  fail: {
-    icon: '☢',
-    color: '#ff6347',
-  },
-  tip: {
-    icon: '✱',
-    color: '#6495ed',
-  },
-  stress: {
-    icon: '⚑',
-    color: '#f4a0ab',
-  },
-};
+import {
+  DEFAULT_LEVELS,
+  DEFAULT_COLORS,
+  DEFAULT_ICONS,
+} from './constants';
 
 function cloneSimple(obj: PlainObject) {
   return JSON.parse(JSON.stringify(obj));
@@ -112,13 +58,13 @@ export default abstract class Logger {
     this.conf = {};
     this.meta = {};
     this.levels = {
-      ...defaultLevels,
+      ...DEFAULT_LEVELS,
     };
     this.colors = {
-      ...defaultColors,
+      ...DEFAULT_COLORS,
     };
     this.icons = {
-      ...defaultIcons,
+      ...DEFAULT_ICONS,
     };
     this.config(options);
     Object.keys(this.levels).forEach((level) => {

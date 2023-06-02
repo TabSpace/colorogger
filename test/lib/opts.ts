@@ -1,11 +1,10 @@
-import $assert from 'power-assert';
 import $lodash from 'lodash';
 import $chalk from 'chalk';
 import { Factory } from './types';
 import { Message } from '../../src/types';
 
 export default function forkTest(Logger: Factory, mode: string) {
-  let msg: Message = null;
+  let msg: Message | null = null;
   const logger = new Logger({
     color: false,
     stringify: true,
@@ -16,7 +15,7 @@ export default function forkTest(Logger: Factory, mode: string) {
   });
 
   describe('disable color', () => {
-    let fork1 = null;
+    let fork1: typeof logger;
     beforeAll(() => {
       fork1 = logger.fork();
     });
@@ -25,23 +24,23 @@ export default function forkTest(Logger: Factory, mode: string) {
       logger.warn('color-warn');
 
       const time = $lodash.get(msg, '__content[0]', '') as string;
-      $assert.equal(time.substr(0, 4), new Date().getFullYear());
+      expect(time.substring(0, 4)).toBe(new Date().getFullYear());
 
       const icon = $lodash.get(msg, '__content[1]');
-      $assert.equal(icon, '[!]');
+      expect(icon).toBe('[!]');
 
       const content = $lodash.get(msg, '__content[2]');
-      $assert.equal(content, 'color-warn');
+      expect(content).toBe('color-warn');
     });
 
     test('fork1 content is enabled', () => {
       fork1.error('fork1');
       if (mode === 'server') {
         const content = $lodash.get(msg, '__content[2]');
-        $assert.equal(content, $chalk.red('fork1'));
+        expect(content).toBe($chalk.red('fork1'));
       } else {
         const content = $lodash.get(msg, '__content[3]');
-        $assert.equal(content, 'color: red;');
+        expect(content).toBe('color: red;');
       }
     });
 
@@ -49,12 +48,12 @@ export default function forkTest(Logger: Factory, mode: string) {
       const unde = void 0;
       logger.info(1, true, null, unde, 'l1\nl2', { a: 1 });
 
-      $assert($lodash.get(msg, '__content[2]') === '1');
-      $assert($lodash.get(msg, '__content[3]') === 'true');
-      $assert($lodash.get(msg, '__content[4]') === 'null');
-      $assert($lodash.get(msg, '__content[5]') === 'undefined');
-      $assert($lodash.get(msg, '__content[6]') === 'l1 l2');
-      $assert($lodash.get(msg, '__content[7]') === '{"a":1}');
+      expect($lodash.get(msg, '__content[2]')).toBe('1');
+      expect($lodash.get(msg, '__content[3]')).toBe('true');
+      expect($lodash.get(msg, '__content[4]')).toBe('null');
+      expect($lodash.get(msg, '__content[5]')).toBe('undefined');
+      expect($lodash.get(msg, '__content[6]')).toBe('l1 l2');
+      expect($lodash.get(msg, '__content[7]')).toBe('{"a":1}');
     });
   });
 }

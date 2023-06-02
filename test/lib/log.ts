@@ -1,4 +1,3 @@
-import $assert from 'power-assert';
 import $lodash from 'lodash';
 import { Factory } from './types';
 import { Message } from '../../src/types';
@@ -9,7 +8,7 @@ interface CustomLogger extends Logger {
 }
 
 export default function logTest(Logger: Factory, mode: string) {
-  let msg: Message = null;
+  let msg: Message;
 
   const logger: CustomLogger = new Logger({
     transport: (message) => {
@@ -39,35 +38,38 @@ export default function logTest(Logger: Factory, mode: string) {
     });
 
     test('msg.content[0] is string', () => {
-      $assert(Array.isArray(msg.content));
-      $assert.equal(msg.content[0], 'log content');
+      const cnt = msg?.content;
+      const str = cnt ? cnt[0] : '';
+      expect(Array.isArray(cnt)).toBeTruthy();
+      expect(str).toBe('log content');
     });
 
     test('msg.content[1] is object', () => {
-      $assert(Array.isArray(msg.content));
-      $assert.equal(typeof msg.content[1], 'object');
-      $assert.equal($lodash.get(msg, 'content[1].a'), 1);
+      expect(Array.isArray(msg.content)).toBeTruthy();
+      expect($lodash.get(msg, 'content[1]')).toBe('object');
+      expect($lodash.get(msg, 'content[1].a')).toBe(1);
     });
 
     test('msg.__content[3] is object', () => {
-      $assert(Array.isArray(msg.__content));
-      $assert.equal(typeof msg.__content[msg.__content.length - 1], 'object');
+      expect(Array.isArray(msg.__content)).toBeTruthy();
+      const last = msg.__content?.pop();
+      expect(last).toBe('object');
     });
 
     test('msg.time', () => {
-      $assert.equal(typeof msg.time, 'number');
+      expect(typeof msg.time).toBe('number');
     });
 
     test('msg.level', () => {
-      $assert.equal(msg.level, 'log');
+      expect(msg.level).toBe('log');
     });
 
     test('msg.grade', () => {
-      $assert.equal(msg.grade, 1);
+      expect(msg.grade).toBe(1);
     });
 
     test('msg.flag', () => {
-      $assert.equal(msg.flag, '');
+      expect(msg.flag).toBe('');
     });
   });
 
@@ -77,23 +79,24 @@ export default function logTest(Logger: Factory, mode: string) {
     });
 
     test('msg.content', () => {
-      $assert(Array.isArray(msg.content));
-      $assert.equal(msg.content[0], 'info');
-      $assert.equal(typeof msg.content[2], 'object');
-      $assert.equal($lodash.get(msg, 'content[2].a'), 1);
+      expect(Array.isArray(msg.content)).toBeTruthy();
+      expect($lodash.get(msg, 'content[0]')).toBe('info');
+      expect(typeof $lodash.get(msg, 'content[2]')).toBe('object');
+      expect($lodash.get(msg, 'content[2].a')).toBe(1);
       if (mode === 'client') {
-        $assert(Array.isArray(msg.__content));
-        $assert.equal(typeof msg.__content[msg.__content.length - 1], 'object');
-        $assert.equal(typeof msg.__content[msg.__content.length - 2], 'object');
+        expect(Array.isArray(msg.__content)).toBeTruthy();
+        const arr = $lodash.get(msg, '__content', []) as object[];
+        expect(arr[arr.length - 1]).toBe('object');
+        expect(arr[arr.length - 2]).toBe('object');
       }
     });
 
     test('msg.level', () => {
-      $assert.equal(msg.level, 'info');
+      expect(msg.level).toBe('info');
     });
 
     test('msg.grade', () => {
-      $assert.equal(msg.grade, 2);
+      expect(msg.grade).toBe(2);
     });
   });
 
@@ -103,35 +106,37 @@ export default function logTest(Logger: Factory, mode: string) {
     });
 
     test('msg.content', () => {
-      $assert(Array.isArray(msg.content));
-      $assert.equal(msg.content[0], true);
+      expect(Array.isArray(msg.content)).toBeTruthy();
+      expect($lodash.get(msg, 'content[0]')).toBe(true);
     });
 
     test('msg.level', () => {
-      $assert.equal(msg.level, 'log');
+      expect(msg.level).toBe('log');
     });
 
     test('msg.grade', () => {
-      $assert.equal(msg.grade, 1);
+      expect(msg.grade).toBe(1);
     });
 
     test('msg.flag', () => {
-      $assert.equal(msg.flag, 'success');
+      expect(msg.flag).toBe('success');
     });
   });
 
   describe('logger.special', () => {
     beforeAll(() => {
-      logger.special(false);
+      if (logger && logger.special) {
+        logger.special(false);
+      }
     });
 
     test('msg.content', () => {
-      $assert(Array.isArray(msg.content));
-      $assert.equal(msg.content[0], false);
+      expect(Array.isArray(msg.content)).toBeTruthy();
+      expect($lodash.get(msg, 'content[0]')).toBe(false);
     });
 
     test('msg.flag', () => {
-      $assert.equal(msg.flag, '');
+      expect(msg.flag).toBe('');
     });
   });
 
@@ -147,8 +152,8 @@ export default function logTest(Logger: Factory, mode: string) {
       }
     });
     test('msg destroy', () => {
-      $assert.equal(msg.content[0], 'before destroyed');
-      $assert(isErr);
+      expect($lodash.get(msg, 'content[0]')).toBe('before destroyed');
+      expect(isErr).toBeTruthy();
     });
   });
 }

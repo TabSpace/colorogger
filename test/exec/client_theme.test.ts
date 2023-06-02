@@ -1,4 +1,3 @@
-import $assert from 'power-assert';
 import $get from 'lodash/get';
 import $logger from '../../src/client';
 import { Message } from '../../src/types';
@@ -34,14 +33,14 @@ describe('info theme', () => {
   });
 
   test('info msg.content', () => {
-    $assert.equal(msg?.content?.[0], 'info');
+    expect(msg?.content?.[0]).toBe('info');
   });
   test('info icon', () => {
-    $assert(String($get(msg, '__content[0]')).indexOf('%c [i]') > 0);
-    $assert.equal($get(msg, '__content[2]'), 'color: ;');
+    expect(String($get(msg, '__content[0]')).indexOf('%c [i]')).toBeGreaterThan(0);
+    expect($get(msg, '__content[2]')).toBe('color: ;');
   });
   test('info color', () => {
-    $assert.equal($get(msg, '__content[3]'), 'color: yellow;');
+    expect($get(msg, '__content[3]')).toBe('color: yellow;');
   });
 });
 
@@ -51,16 +50,16 @@ describe('debug theme', () => {
   });
 
   test('debug msg.content', () => {
-    $assert.equal(msg?.content?.[0], 'debug');
+    expect(msg?.content?.[0]).toBe('debug');
   });
   test('debug icon', () => {
-    $assert(String($get(msg, '__content[0]')).indexOf('%c [d]') > 0);
-    $assert.equal($get(msg, '__content[2]'), 'color: #ff9501;');
+    expect(String($get(msg, '__content[0]')).indexOf('%c [d]')).toBeGreaterThan(0);
+    expect($get(msg, '__content[2]')).toBe('color: #ff9501;');
   });
   test('debug color', () => {
-    $assert.equal($get(msg, '__content[3]'), 'color: #ff9501;');
+    expect($get(msg, '__content[3]')).toBe('color: #ff9501;');
   });
   test('debug extra', () => {
-    $assert.equal($get(msg, '__content[4].a'), 1);
+    expect($get(msg, '__content[4].a')).toBe(1);
   });
 });

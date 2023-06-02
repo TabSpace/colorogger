@@ -1,4 +1,3 @@
-import $assert from 'power-assert';
 import $get from 'lodash/get';
 import $logger from '../../src/client';
 import { Message } from '../../src/types';
@@ -36,13 +35,13 @@ describe('temp method', () => {
   });
 
   test('temp msg.content', () => {
-    $assert.equal($get(msg, 'content[0]'), 't1');
+    expect($get(msg, 'content[0]')).toBe('t1');
   });
   test('temp icon', () => {
-    $assert.equal($get(msg, '__content[2]'), 'color: ;');
+    expect($get(msg, '__content[2]')).toBe('color: ;');
   });
   test('temp color', () => {
-    $assert.equal($get(msg, '__content[3]'), 'color: ;');
+    expect($get(msg, '__content[3]')).toBe('color: ;');
   });
 });
 
@@ -54,12 +53,12 @@ describe('custom method', () => {
   });
 
   test('custom msg.content', () => {
-    $assert.equal($get(msg, 'content[0]'), 'c1');
+    expect($get(msg, 'content[0]')).toBe('c1');
   });
   test('custom icon', () => {
-    $assert.equal($get(msg, '__content[2]'), 'color: #ff9501;');
+    expect($get(msg, '__content[2]')).toBe('color: #ff9501;');
   });
   test('custom color', () => {
-    $assert.equal($get(msg, '__content[3]'), 'color: #ff9501;');
+    expect($get(msg, '__content[3]')).toBe('color: #ff9501;');
   });
 });

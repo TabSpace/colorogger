@@ -1,4 +1,3 @@
-import $assert from 'power-assert';
 import $get from 'lodash/get';
 import $logger from '../../src/server';
 import { Message } from '../../src/types';
@@ -38,13 +37,13 @@ describe('temp method', () => {
   });
 
   test('temp msg.content', () => {
-    $assert.equal($get(msg, 'content[0]'), 't1');
+    expect($get(msg, 'content[0]')).toBe('t1');
   });
   test('temp icon', () => {
-    $assert.equal($get(msg, '__content[1]'), '[.]');
+    expect($get(msg, '__content[1]')).toBe('[.]');
   });
   test('temp color', () => {
-    $assert.equal($get(msg, '__content[2]'), 't1');
+    expect($get(msg, '__content[2]')).toBe('t1');
   });
 });
 
@@ -56,14 +55,14 @@ describe('custom method', () => {
   });
 
   test('custom msg.content', () => {
-    $assert.equal($get(msg, 'content[0]'), 'c1');
+    expect($get(msg, 'content[0]')).toBe('c1');
   });
   if (!ci) {
     test('custom icon', () => {
-      $assert.equal($get(msg, '__content[1]'), '\u001b[38;2;255;149;1m[c]\u001b[39m');
+      expect($get(msg, '__content[1]')).toBe('\u001b[38;2;255;149;1m[c]\u001b[39m');
     });
     test('custom color', () => {
-      $assert.equal($get(msg, '__content[2]'), '\u001b[38;2;255;149;1mc1\u001b[39m');
+      expect($get(msg, '__content[2]')).toBe('\u001b[38;2;255;149;1mc1\u001b[39m');
     });
   }
 });

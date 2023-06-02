@@ -1,11 +1,10 @@
-import $assert from 'power-assert';
 import $lodash from 'lodash';
 import $chalk from 'chalk';
 import { Factory } from './types';
 import { Message } from '../../src/types';
 
 export default function metaTest(Logger: Factory, mode: string) {
-  let msg: Message = null;
+  let msg: Message | null = null;
 
   const logger = new Logger({
     meta: {
@@ -34,13 +33,13 @@ export default function metaTest(Logger: Factory, mode: string) {
     });
 
     test('msg.content', () => {
-      $assert.equal(msg.content[0], 'fork1');
+      expect($lodash.get(msg, 'content[0]')).toBe('fork1');
     });
     test('msg.url', () => {
-      $assert.equal(msg.url, '/url');
+      expect(msg?.url).toBe('/url');
     });
     test('msg.guid', () => {
-      $assert.equal(msg.guid, 'f1_guid');
+      expect(msg?.guid).toBe('f1_guid');
     });
   });
 
@@ -50,13 +49,13 @@ export default function metaTest(Logger: Factory, mode: string) {
     });
 
     test('msg.content', () => {
-      $assert.equal(msg.content[0], 'fork2');
+      expect($lodash.get(msg, 'content[0]')).toBe('fork2');
     });
     test('msg.url', () => {
-      $assert.equal(msg.url, '/url');
+      expect(msg?.url).toBe('/url');
     });
     test('msg.guid', () => {
-      $assert.equal(msg.guid, 'f2_guid');
+      expect(msg?.guid).toBe('f2_guid');
     });
   });
 
@@ -71,16 +70,16 @@ export default function metaTest(Logger: Factory, mode: string) {
     });
 
     test('msg.content', () => {
-      $assert.equal(msg.content[0], 'fork3');
+      expect($lodash.get(msg, 'content[0]')).toBe('fork3');
     });
     test('msg.url', () => {
-      $assert.equal(msg.url, '/url');
+      expect(msg?.url).toBe('/url');
     });
     test('msg.guid', () => {
-      $assert.equal(msg.guid, 'f2_guid');
+      expect(msg?.guid).toBe('f2_guid');
     });
     test('msg.tag', () => {
-      $assert.equal(msg.tag, 'tag3');
+      expect(msg?.tag).toBe('tag3');
     });
   });
 
@@ -106,29 +105,33 @@ export default function metaTest(Logger: Factory, mode: string) {
     });
 
     test('msg.content', () => {
-      $assert.equal(msg.content[0], 'fork4');
+      expect($lodash.get(msg, 'content[0]')).toBe('fork4');
     });
     test('msg.url', () => {
-      $assert.equal(msg.url, '/url');
+      expect(msg?.url).toBe('/url');
     });
     test('msg.guid', () => {
-      $assert.equal(msg.guid, 'f2_guid');
+      expect(msg?.guid).toBe('f2_guid');
     });
     test('msg.tag', () => {
-      $assert.equal(msg.tagn, 'tagn-value');
-      $assert.equal(msg.tagw, 'tagw-value');
-      $assert.equal(msg.tagv, 'tagv-value');
+      expect(msg?.tagn).toBe('tagn-value');
+      expect(msg?.tagw).toBe('tagw-value');
+      expect(msg?.tagv).toBe('tagv-value');
     });
     if (mode === 'server') {
       test('msg.tag wrap', () => {
-        $assert(String(msg.__content[4]).indexOf('[tagn-value]') >= 0);
-        $assert(String(msg.__content[5]).indexOf('(tagw-value)') >= 0);
-        $assert(msg.__content.join(' ').indexOf('[tagv-value]') < 0);
+        const cnt4 = String($lodash.get(msg, '__content[4]'));
+        expect(cnt4).toContain('[tagn-value]');
+        const cnt5 = String($lodash.get(msg, '__content[5]'));
+        expect(cnt5).toContain('(tagw-value)');
+        const cnt = $lodash.get(msg, '__content', []).join(' ');
+        expect(cnt).not.toContain('[tagv-value]');
       });
     } else {
       test('msg.tag wrap', () => {
-        $assert(String(msg.__content[0]).indexOf('(tagw-value)') > 0);
-        $assert(String(msg.__content[0]).indexOf('tagv-value') < 0);
+        const cnt = String($lodash.get(msg, '__content[0]'));
+        expect(cnt).toContain('(tagw-value)');
+        expect(cnt).not.toContain('tagv-value');
       });
     }
   });
@@ -147,21 +150,23 @@ export default function metaTest(Logger: Factory, mode: string) {
     });
 
     test('msg.content', () => {
-      $assert.equal(msg.content[0], 'fork5');
+      expect($lodash.get(msg, 'content[0]')).toBe('fork5');
     });
     test('msg.url', () => {
-      $assert.equal(msg.url, '/url');
+      expect(msg?.url).toBe('/url');
     });
     test('msg.guid', () => {
-      $assert.equal(msg.guid, 'f1_guid');
+      expect(msg?.guid).toBe('f1_guid');
     });
     if (mode === 'server') {
       test('msg.tag5 color', () => {
-        $assert($lodash.get(msg, '__content[4]') === $chalk.blue('[tag5]'));
+        const cnt4 = $lodash.get(msg, '__content[4]');
+        expect(cnt4).toBe($chalk.blue('[tag5]'));
       });
     } else {
       test('msg.tag5 color', () => {
-        $assert($lodash.get(msg, '__content[5]') === 'color: blue;');
+        const cnt5 = $lodash.get(msg, '__content[5]');
+        expect(cnt5).toBe('color: blue;');
       });
     }
   });

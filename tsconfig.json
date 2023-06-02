@@ -3,6 +3,7 @@
     "target": "es5",
     "sourceMap": true,
     "module": "commonjs",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -10,6 +11,8 @@
     "noImplicitThis": false,
     "allowJs": true,
     "declaration": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "rootDir": "./src",
     "outDir": "./lib",
     "watch": false

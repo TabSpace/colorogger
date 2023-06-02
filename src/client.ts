@@ -1,5 +1,5 @@
 import Logger from './mods/logger';
-import { strTypes } from './mods/constants';
+import { STRING_AS_TYPES } from './mods/constants';
 import { LoggerOptions, PlainObject } from './types';
 
 // run at browser
@@ -19,7 +19,7 @@ class ClientLogger extends Logger {
     args.forEach((arg) => {
       const item = arg;
       if (!breaked) {
-        if (strTypes.indexOf(typeof item.content) >= 0) {
+        if (STRING_AS_TYPES.indexOf(typeof item.content) >= 0) {
           item.content = String(item.content);
         }
         if (typeof item.content === 'string') {
