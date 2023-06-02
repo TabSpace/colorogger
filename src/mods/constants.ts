@@ -1,10 +1,10 @@
 export const STRING_AS_TYPES = ['undefined', 'number', 'boolean'];
 
-export const COLOR_DEBUG = 'magenta';
-export const COLOR_LOG = '';
+export const COLOR_DEBUG = '#9932cc';
+export const COLOR_LOG = '#808080';
 export const COLOR_INFO = '#1e90ff';
 export const COLOR_WARN = '#ffd700';
-export const COLOR_ERROR = 'red';
+export const COLOR_ERROR = '#dc143c';
 export const COLOR_SUCCESS = '#04be02';
 export const COLOR_FAIL = '#ff6347';
 export const COLOR_TIP = '#6495ed';
@@ -29,9 +29,9 @@ export const DEFAULT_LEVELS = {
 };
 
 export const DEFAULT_COLORS = {
-  debug: '',
-  log: '',
-  info: '',
+  debug: COLOR_LOG,
+  log: COLOR_LOG,
+  info: COLOR_LOG,
   warn: COLOR_WARN,
   error: COLOR_ERROR,
   success: COLOR_SUCCESS,

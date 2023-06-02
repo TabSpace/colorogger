@@ -2,6 +2,17 @@ import $lodash from 'lodash';
 import $chalk from 'chalk';
 import { Message } from '../../src/types';
 import { Factory } from './types';
+import {
+  COLOR_LOG,
+  COLOR_DEBUG,
+  COLOR_INFO,
+  COLOR_WARN,
+  COLOR_ERROR,
+  COLOR_SUCCESS,
+  COLOR_TIP,
+  COLOR_FAIL,
+  COLOR_STRESS,
+} from '../../src/mods/constants';
 
 export default function baseTest(Logger: Factory, mode: string) {
   let msg: Message | null = null;
@@ -17,11 +28,11 @@ export default function baseTest(Logger: Factory, mode: string) {
       expect(typeof logger.log).toBe('function');
     });
 
-    test('logger.log color is normal', () => {
+    test(`logger.log color is ${COLOR_LOG}`, () => {
       logger.log('log');
       if (mode === 'client') {
-        expect($lodash.get(msg, '__content[1]')).toBe('color: gray;');
-        expect($lodash.get(msg, '__content[2]')).toBe('color: ;');
+        expect($lodash.get(msg, '__content[1]')).toBe(`color: gray;`);
+        expect($lodash.get(msg, '__content[2]')).toBe(`color: ${COLOR_LOG};`);
       } else {
         expect($lodash.get(msg, '__content[1]')).toBe('[.]');
       }
@@ -31,12 +42,12 @@ export default function baseTest(Logger: Factory, mode: string) {
       expect(typeof logger.info).toBe('function');
     });
 
-    test('logger.info color is #1e90ff', () => {
+    test(`logger.info color is ${COLOR_INFO}`, () => {
       logger.info('info');
       if (mode === 'client') {
-        expect($lodash.get(msg, '__content[2]')).toBe('color: #1e90ff;');
+        expect($lodash.get(msg, '__content[2]')).toBe(`color: ${COLOR_INFO};`);
       } else {
-        expect($lodash.get(msg, '__content[1]')).toBe($chalk.hex('#1e90ff')('[*]'));
+        expect($lodash.get(msg, '__content[1]')).toBe($chalk.hex(COLOR_INFO)('[*]'));
       }
     });
 
@@ -44,12 +55,12 @@ export default function baseTest(Logger: Factory, mode: string) {
       expect(typeof logger.debug).toBe('function');
     });
 
-    test('logger.debug color is magenta', () => {
+    test(`logger.debug color is ${COLOR_DEBUG}`, () => {
       logger.debug('debug');
       if (mode === 'client') {
-        expect($lodash.get(msg, '__content[2]')).toBe('color: magenta;');
+        expect($lodash.get(msg, '__content[2]')).toBe(`color: ${COLOR_DEBUG};`);
       } else {
-        expect($lodash.get(msg, '__content[1]')).toBe($chalk.magenta('[#]'));
+        expect($lodash.get(msg, '__content[1]')).toBe($chalk.hex(COLOR_DEBUG)('[#]'));
       }
     });
 
@@ -57,12 +68,12 @@ export default function baseTest(Logger: Factory, mode: string) {
       expect(typeof logger.warn).toBe('function');
     });
 
-    test('logger.warn color is #ffd700', () => {
+    test(`logger.warn color is ${COLOR_WARN}`, () => {
       logger.warn('warn');
       if (mode === 'client') {
-        expect($lodash.get(msg, '__content[2]')).toBe('color: #ffd700;');
+        expect($lodash.get(msg, '__content[2]')).toBe(`color: ${COLOR_WARN};`);
       } else {
-        expect($lodash.get(msg, '__content[1]')).toBe($chalk.hex('#ffd700')('[!]'));
+        expect($lodash.get(msg, '__content[1]')).toBe($chalk.hex(COLOR_WARN)('[!]'));
       }
     });
 
@@ -70,12 +81,12 @@ export default function baseTest(Logger: Factory, mode: string) {
       expect(typeof logger.error).toBe('function');
     });
 
-    test('logger.error color is red', () => {
+    test(`logger.error color is ${COLOR_ERROR}`, () => {
       logger.error('error');
       if (mode === 'client') {
-        expect($lodash.get(msg, '__content[2]')).toBe('color: red;');
+        expect($lodash.get(msg, '__content[2]')).toBe(`color: ${COLOR_ERROR};`);
       } else {
-        expect($lodash.get(msg, '__content[1]')).toBe($chalk.red('[x]'));
+        expect($lodash.get(msg, '__content[1]')).toBe($chalk.hex(COLOR_ERROR)('[x]'));
       }
     });
 
@@ -83,12 +94,12 @@ export default function baseTest(Logger: Factory, mode: string) {
       expect(typeof logger.success).toBe('function');
     });
 
-    test('logger.success color is green', () => {
+    test(`logger.success color is ${COLOR_SUCCESS}`, () => {
       logger.success('success');
       if (mode === 'client') {
-        expect($lodash.get(msg, '__content[2]')).toBe('color: green;');
+        expect($lodash.get(msg, '__content[2]')).toBe(`color: ${COLOR_SUCCESS};`);
       } else {
-        expect($lodash.get(msg, '__content[1]')).toBe($chalk.green('[✓]'));
+        expect($lodash.get(msg, '__content[1]')).toBe($chalk.hex(COLOR_SUCCESS)('[✓]'));
       }
     });
 
@@ -96,12 +107,12 @@ export default function baseTest(Logger: Factory, mode: string) {
       expect(typeof logger.fail).toBe('function');
     });
 
-    test('logger.fail color is red', () => {
+    test(`logger.fail color is ${COLOR_FAIL}`, () => {
       logger.fail('fail');
       if (mode === 'client') {
-        expect($lodash.get(msg, '__content[2]')).toBe('color: red;');
+        expect($lodash.get(msg, '__content[2]')).toBe(`color: ${COLOR_FAIL};`);
       } else {
-        expect($lodash.get(msg, '__content[1]')).toBe($chalk.red('[☢]'));
+        expect($lodash.get(msg, '__content[1]')).toBe($chalk.hex(COLOR_FAIL)('[☢]'));
       }
     });
 
@@ -109,12 +120,12 @@ export default function baseTest(Logger: Factory, mode: string) {
       expect(typeof logger.tip).toBe('function');
     });
 
-    test('logger.tip color is cyan', () => {
+    test(`logger.tip color is ${COLOR_TIP}`, () => {
       logger.tip('tip');
       if (mode === 'client') {
-        expect($lodash.get(msg, '__content[2]')).toBe('color: cyan;');
+        expect($lodash.get(msg, '__content[2]')).toBe(`color: ${COLOR_TIP};`);
       } else {
-        expect($lodash.get(msg, '__content[1]')).toBe($chalk.cyan('[✱]'));
+        expect($lodash.get(msg, '__content[1]')).toBe($chalk.hex(COLOR_TIP)('[✱]'));
       }
     });
 
@@ -122,12 +133,12 @@ export default function baseTest(Logger: Factory, mode: string) {
       expect(typeof logger.stress).toBe('function');
     });
 
-    test('logger.stress color is magenta', () => {
+    test(`logger.stress color is ${COLOR_STRESS}`, () => {
       logger.stress('stress');
       if (mode === 'client') {
-        expect($lodash.get(msg, '__content[2]')).toBe('color: magenta;');
+        expect($lodash.get(msg, '__content[2]')).toBe(`color: ${COLOR_STRESS};`);
       } else {
-        expect($lodash.get(msg, '__content[1]')).toBe($chalk.magenta('[⚑]'));
+        expect($lodash.get(msg, '__content[1]')).toBe($chalk.hex(COLOR_STRESS)('[⚑]'));
       }
     });
   });
