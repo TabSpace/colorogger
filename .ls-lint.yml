@@ -1,0 +1,15 @@
+ls:
+  src:
+    .js: kebab-case
+    .jsx: kebab-case
+    .json: kebab-case
+    .svg: kebab-case
+    .css: kebab-case
+    .less: kebab-case
+    .ts: kebab-case
+    .tsx: kebab-case
+    .d.ts: kebab-case
+    .vue: kebab-case
+ignore:
+  - .git
+  - node_modules

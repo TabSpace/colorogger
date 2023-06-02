@@ -5,7 +5,7 @@
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "./hooks/pre-publish.sh && npm run build",
     "build": "npm run compile && npm run rollup",
     "rollup": "rollup -c rollup.config.js",
     "compile": "tsc",
@@ -15,7 +15,10 @@
     "example:server": "node ./example/server.js",
     "example:client": "http-server ./",
     "semantic-release": "semantic-release",
-    "lint": "eslint ./ --fix"
+    "lint": "npm run lint:ls && npm run lint:js",
+    "lint:ls": "ls-lint",
+    "lint:js": "eslint ./",
+    "prepare": "npx husky install"
   },
   "repository": {
     "type": "git",
@@ -25,6 +28,9 @@
     "url": "https://github.com/TabSpace/colorogger/issues"
   },
   "homepage": "https://github.com/TabSpace/colorogger#readme",
+  "dependencies": {
+    "chalk": "^4.1.0"
+  },
   "devDependencies": {
     "@commitlint/cli": "^17.6.3",
     "@commitlint/config-conventional": "^17.6.3",
@@ -55,34 +61,12 @@
     "tslib": "^2.5.2",
     "typescript": "^4.3.5"
   },
-  "lint-staged": {
-    "*.ts": [
-      "eslint"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "./hooks/pre-commit.sh && lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
   "files": [
+    "index.js",
+    "index.d.ts",
     "lib",
     "src"
   ],
   "author": "pillar0514@163.com",
-  "license": "MIT",
-  "dependencies": {
-    "chalk": "^4.1.0"
-  }
+  "license": "MIT"
 }
