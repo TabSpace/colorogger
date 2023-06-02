@@ -11,21 +11,21 @@ jobs:
     env:
       CI: action
     steps:
-      - name: Checkout
+      - name: checkout
         uses: actions/checkout@v2
-      - name: Setup Node
-        uses: actions/setup-node@v1
+      - name: node-version
+        uses: actions/setup-node@main
         with:
           node-version: 12
-      - name: Install
-        run: npm i
-      - name: Test
+      - name: npm-install
+        run: npm install
+      - name: test
         run: npm test
-      - name: Coverage
+      - name: coverage
         run: npx codecov -t ${{ secrets.CODECOV_TOKEN }}
-      - name: Build
+      - name: build
         run: npm run build
-      - name: Semantic Release
+      - name: semantic-release
         uses: cycjimmy/semantic-release-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
