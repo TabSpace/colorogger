@@ -24,10 +24,10 @@ const defaultColors = {
   debug: '',
   error: 'red',
   warn: '#ffd700',
-  success: 'green',
-  fail: 'red',
-  tip: 'cyan',
-  stress: 'magenta',
+  success: '#04be02',
+  fail: '#ff6347',
+  tip: '#6495ed',
+  stress: '#f4a0ab',
 };
 
 const defaultIcons = {
@@ -53,19 +53,19 @@ const defaultIcons = {
   },
   success: {
     icon: '✓',
-    color: 'green',
+    color: '#04be02',
   },
   fail: {
     icon: '☢',
-    color: 'red',
+    color: '#ff6347',
   },
   tip: {
     icon: '✱',
-    color: 'cyan',
+    color: '#6495ed',
   },
   stress: {
     icon: '⚑',
-    color: 'magenta',
+    color: '#f4a0ab',
   },
 };
 
@@ -126,11 +126,21 @@ export default abstract class Logger {
         level,
       });
     });
-    ['success', 'fail', 'tip', 'stress'].forEach((prop) => {
-      this.method(prop, {
-        level: 'log',
-        flag: prop,
-      });
+    this.method('tip', {
+      level: 'log',
+      flag: 'tip',
+    });
+    this.method('success', {
+      level: 'info',
+      flag: 'success',
+    });
+    this.method('stress', {
+      level: 'info',
+      flag: 'stress',
+    });
+    this.method('fail', {
+      level: 'error',
+      flag: 'fail',
     });
   }
 
