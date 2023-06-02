@@ -77,7 +77,7 @@ export default abstract class Logger {
       flag: 'tip',
     });
     this.method('success', {
-      level: 'info',
+      level: 'log',
       flag: 'success',
     });
     this.method('stress', {

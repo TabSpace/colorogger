@@ -34,7 +34,7 @@ export default function baseTest(Logger: Factory, mode: string) {
         expect($lodash.get(msg, '__content[1]')).toBe(`color: gray;`);
         expect($lodash.get(msg, '__content[2]')).toBe(`color: ${COLOR_LOG};`);
       } else {
-        expect($lodash.get(msg, '__content[1]')).toBe('[.]');
+        expect($lodash.get(msg, '__content[1]')).toBe($chalk.hex(COLOR_LOG)('[.]'));
       }
     });
 

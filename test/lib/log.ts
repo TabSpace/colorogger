@@ -46,14 +46,14 @@ export default function logTest(Logger: Factory, mode: string) {
 
     test('msg.content[1] is object', () => {
       expect(Array.isArray(msg.content)).toBeTruthy();
-      expect($lodash.get(msg, 'content[1]')).toBe('object');
+      expect(typeof $lodash.get(msg, 'content[1]')).toBe('object');
       expect($lodash.get(msg, 'content[1].a')).toBe(1);
     });
 
     test('msg.__content[3] is object', () => {
       expect(Array.isArray(msg.__content)).toBeTruthy();
       const last = msg.__content?.pop();
-      expect(last).toBe('object');
+      expect(typeof last).toBe('object');
     });
 
     test('msg.time', () => {
@@ -86,8 +86,8 @@ export default function logTest(Logger: Factory, mode: string) {
       if (mode === 'client') {
         expect(Array.isArray(msg.__content)).toBeTruthy();
         const arr = $lodash.get(msg, '__content', []) as object[];
-        expect(arr[arr.length - 1]).toBe('object');
-        expect(arr[arr.length - 2]).toBe('object');
+        expect(typeof arr[arr.length - 1]).toBe('object');
+        expect(typeof arr[arr.length - 2]).toBe('object');
       }
     });
 

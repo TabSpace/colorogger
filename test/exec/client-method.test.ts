@@ -1,6 +1,9 @@
 import $get from 'lodash/get';
 import $logger from '../../src/client';
 import { Message } from '../../src/types';
+import {
+  COLOR_LOG,
+} from '../../src/mods/constants';
 
 let msg: Message;
 
@@ -38,10 +41,10 @@ describe('temp method', () => {
     expect($get(msg, 'content[0]')).toBe('t1');
   });
   test('temp icon', () => {
-    expect($get(msg, '__content[2]')).toBe('color: ;');
+    expect($get(msg, '__content[2]')).toBe(`color: ${COLOR_LOG};`);
   });
   test('temp color', () => {
-    expect($get(msg, '__content[3]')).toBe('color: ;');
+    expect($get(msg, '__content[3]')).toBe(`color: ;`);
   });
 });
 

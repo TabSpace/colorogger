@@ -1,6 +1,10 @@
 import $get from 'lodash/get';
+import $chalk from 'chalk';
 import $logger from '../../src/server';
 import { Message } from '../../src/types';
+import {
+  COLOR_LOG,
+} from '../../src/mods/constants';
 
 const ci = process.env.CI;
 
@@ -40,7 +44,7 @@ describe('temp method', () => {
     expect($get(msg, 'content[0]')).toBe('t1');
   });
   test('temp icon', () => {
-    expect($get(msg, '__content[1]')).toBe('[.]');
+    expect($get(msg, '__content[1]')).toBe($chalk.hex(COLOR_LOG)('[.]'));
   });
   test('temp color', () => {
     expect($get(msg, '__content[2]')).toBe('t1');

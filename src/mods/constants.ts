@@ -29,9 +29,9 @@ export const DEFAULT_LEVELS = {
 };
 
 export const DEFAULT_COLORS = {
-  debug: COLOR_LOG,
-  log: COLOR_LOG,
-  info: COLOR_LOG,
+  debug: '',
+  log: '',
+  info: '',
   warn: COLOR_WARN,
   error: COLOR_ERROR,
   success: COLOR_SUCCESS,
