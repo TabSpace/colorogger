@@ -10,6 +10,11 @@ ls:
     .tsx: kebab-case
     .d.ts: kebab-case
     .vue: kebab-case
+  test:
+    .js: kebab-case
+    .ts: kebab-case
+    .test.js: kebab-case
+    .test.ts: kebab-case
 ignore:
   - .git
   - node_modules
