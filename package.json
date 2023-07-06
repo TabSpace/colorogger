@@ -3,7 +3,7 @@
   "version": "0.0.0-development",
   "description": "A simple colorful logger. Both for browser and node-server. Easy to report and record.",
   "main": "index.js",
-  "types": "index.d.ts",
+  "types": "lib/index.d.ts",
   "scripts": {
     "prepublishOnly": "./hooks/pre-publish.sh && npm run build",
     "build": "npm run compile && npm run rollup",

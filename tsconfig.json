@@ -14,8 +14,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "rootDir": "./src",
-    "outDir": "./lib",
-    "watch": false
+    "outDir": "./lib"
   },
   "include": [
     "src"
