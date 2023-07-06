@@ -10,8 +10,7 @@
     "noImplicitThis": false,
     "allowJs": true,
     "declaration": true,
-    "rootDir": "./",
-    "watch": false
+    "rootDir": "./"
   },
   "include": [
     "./*.js",

@@ -21,6 +21,8 @@ function cloneSimple(obj: PlainObject) {
 
 export declare type LogMethod = (...args: unknown[]) => void;
 
+const noop: LogMethod = () => {};
+
 export default abstract class Logger {
   public conf: LoggerOptions;
 
@@ -66,7 +68,20 @@ export default abstract class Logger {
     this.icons = {
       ...DEFAULT_ICONS,
     };
+    this.transport = () => {};
+    this.log = noop;
+    this.debug = noop;
+    this.warn = noop;
+    this.error = noop;
+    this.success = noop;
+    this.fail = noop;
+    this.tip = noop;
+    this.stress = noop;
     this.config(options);
+    this.setMethods();
+  }
+
+  public setMethods() {
     Object.keys(this.levels).forEach((level) => {
       this.method(level, {
         level,
