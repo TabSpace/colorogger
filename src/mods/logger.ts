@@ -92,11 +92,11 @@ export default abstract class Logger {
       flag: 'tip',
     });
     this.method('success', {
-      level: 'log',
+      level: 'info',
       flag: 'success',
     });
     this.method('stress', {
-      level: 'info',
+      level: 'warn',
       flag: 'stress',
     });
     this.method('fail', {
@@ -120,6 +120,7 @@ export default abstract class Logger {
       color: true,
       timeStamp: true,
       print: true,
+      level: 0,
       metaColor: false,
       stringify: false,
       meta: {},
@@ -284,9 +285,11 @@ export default abstract class Logger {
       this.transport(msg);
     }
     if (conf.print) {
-      const method = 'log';
-      // eslint-disable-next-line no-console
-      console[method](...contentArgs);
+      if (msg.grade >= conf.level) {
+        const method = 'log';
+        // eslint-disable-next-line no-console
+        console[method](...contentArgs);
+      }
     }
   }
 

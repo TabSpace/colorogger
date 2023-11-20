@@ -86,6 +86,21 @@ Enable logger print log to console.
 - type: `Boolean`
 - default: `true`
 
+### level
+
+Enable logger log to console by level grade.
+
+- type: `Number`
+- default: `0`
+
+default levels grades:
+
+- 0: debug
+- 1: log, tip
+- 2: info, success
+- 3: warn, stress
+- 4: error
+
 ### timeTemplate
 
 Format time stamp.

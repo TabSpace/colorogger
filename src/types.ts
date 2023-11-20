@@ -27,6 +27,7 @@ export interface LoggerOptions {
   color?: boolean;
   timeStamp?: boolean;
   print?: boolean;
+  level?: number;
   stringify?: boolean;
   metaColor?: boolean | SimpleObject;
   meta?: PlainObject;
