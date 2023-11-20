@@ -111,11 +111,11 @@ export default function logTest(Logger: Factory, mode: string) {
     });
 
     test('msg.level', () => {
-      expect(msg.level).toBe('log');
+      expect(msg.level).toBe('info');
     });
 
     test('msg.grade', () => {
-      expect(msg.grade).toBe(1);
+      expect(msg.grade).toBe(2);
     });
 
     test('msg.flag', () => {
