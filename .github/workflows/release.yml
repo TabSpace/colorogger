@@ -20,12 +20,3 @@ jobs:
         run: npm install
       - name: test
         run: npm test
-      - name: coverage
-        run: npx codecov -t ${{ secrets.CODECOV_TOKEN }}
-      - name: build
-        run: npm run build
-      - name: semantic-release
-        uses: cycjimmy/semantic-release-action@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
