@@ -306,3 +306,15 @@ logger.intro('intro text');
 ### destroy()
 
 Destroy instance.
+
+## 维护
+
+更新版本
+
+```bash
+npm run release
+```
+
+## 文档
+
+- [CHANGELOG](/CHANGELOG.md)
