@@ -1,5 +1,5 @@
-const $logger = require('./lib/server');
+const $logger = require('./lib/server.pack');
 
-const logger = $logger.default;
+const logger = $logger;
 module.exports = logger;
 exports.default = logger;

@@ -16,4 +16,17 @@ conf.push({
   ],
 });
 
+conf.push({
+  input: 'lib/server.js',
+  output: {
+    name: 'colorogger',
+    file: 'lib/server.pack.js',
+    format: 'umd',
+  },
+  plugins: [
+    nodeResolve(),
+    commonjs(),
+  ],
+});
+
 export default conf;
