@@ -5,7 +5,7 @@
   "main": "index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "release": "npm test && npm run build && npm run tag",
+    "release": "npm test && npm run tag",
     "tag": "corp-semantic-release --changelogpreset angular-bitbucket --branch develop",
     "prepublishOnly": "./hooks/pre-publish.sh && npm test && npm run build",
     "build": "npm run compile && npm run rollup",
